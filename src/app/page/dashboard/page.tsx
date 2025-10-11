@@ -11,18 +11,13 @@ import { LojaProps } from "@/src/types";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
-
   ScrollView,
   StyleSheet,
   Text,
   View
 } from "react-native";
 
-
-
 export default function Dashboard() {
-
-
   const {
     searchTerm,
     month,

@@ -84,6 +84,12 @@ function MainLayout() {
           name="page/perfil/page"
           options={{ headerShown: false }}
         />
+   
+        <Stack.Screen
+          name="page/detailLoja/[id]"
+          options={{ headerShown: false }}
+        />
+
       </Stack>
     </ToastProvider>
   );

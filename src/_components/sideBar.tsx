@@ -82,7 +82,7 @@ const { user, setUser} = useAppContext()
                     <Text style={styles.menuText}>Painel</Text>
                   </TouchableOpacity>
       
-                  <TouchableOpacity style={styles.menuItem} onPress={()=>router.replace("/page/perfil/page")}>
+                  <TouchableOpacity style={styles.menuItem} onPress={()=>router.push("/page/perfil/page")}>
                     <Ionicons name="person-outline" size={24} color="#3D3C6C" />
                     <Text style={styles.menuText}>Perfil</Text>
                   </TouchableOpacity>

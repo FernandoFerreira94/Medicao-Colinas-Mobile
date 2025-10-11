@@ -65,9 +65,11 @@ export function MonthYearDropdown() {
                 selectedValue={month}
                 style={styles.picker}
                 onValueChange={(itemValue) => setMonth(itemValue)}
+                itemStyle={{ color: color.gray900 }}
               >
                 {months.map((m, i) => (
                   <Picker.Item key={i} label={m} value={i + 1} />
+                  
                 ))}
               </Picker>
 
@@ -75,6 +77,7 @@ export function MonthYearDropdown() {
                 selectedValue={year}
                 style={styles.picker}
                 onValueChange={(itemValue) => setYear(itemValue)}
+                itemStyle={{ color: color.gray900 }}
               >
                 {years.map((y) => (
                   <Picker.Item key={y} label={y.toString()} value={y} />
@@ -122,7 +125,7 @@ const styles = StyleSheet.create({
   },
   modalTitle: { fontSize: 16, fontWeight: "600" },
   pickersRow: { flexDirection: "row", gap: 10 },
-  picker: { height: 120, width: 140 },
+  picker: { height: 240, width: 140 },
   confirmButton: {
     backgroundColor: color.roxo,
     paddingVertical: 12,

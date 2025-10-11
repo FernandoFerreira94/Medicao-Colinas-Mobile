@@ -38,6 +38,7 @@ export interface MedidorComLeitura {
   ultima_leitura: number;
   detalhes: string;
   data_instalacao: string;
+  quadro_distribuicao: string
   leituras: LeituraProps[]; // Adicione a leitura aqui, como um array
 }
 

@@ -1,19 +1,28 @@
-import { useState } from "react";
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { router } from "expo-router";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { truncateText } from "../action/truncateText";
 import { color } from "../constants/color";
 import { LojaProps } from "../types";
 
 export default function Card({ loja }: { loja: LojaProps }) {
-  const [isDisabled, setIsDisabled] = useState(true);
-
+const isToDetailLoja = (idLoja: string, idMedidor:string) => {
+  if (idLoja && idMedidor) {
+    
+    router.push({
+      pathname: "/page/detailLoja/[id]",
+      params: { id: idLoja, idMedidor: idMedidor }, 
+    });
+  }
+  }
   const verifi = () => {
     if (loja?.medidores[0]?.leituras[0]?.leitura_atual) {
       return true;
     }
     return false;
   };
+
   const isVerificad = verifi();
+  console.log("id medidor"+loja.medidores[0].id)
   return (
     <View
       style={[
@@ -78,8 +87,13 @@ export default function Card({ loja }: { loja: LojaProps }) {
               backgroundColor: color.grayPlaceholder900,
             },
           ]}
-          disabled={isVerificad}
-          onPress={() => Alert.alert("Em desenvolvimento")}
+          
+          onPress={()=>{
+            if (loja?.id && loja?.medidores[0].id) {
+              isToDetailLoja(loja?.id, loja?.medidores[0]?.id)
+            }
+          }
+            }
         >
           <Text
             style={[

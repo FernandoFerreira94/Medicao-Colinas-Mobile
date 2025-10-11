@@ -1,6 +1,7 @@
 // packages/utils/src/queryKeys.ts
 
 export const queryKeys = {
+  lojaSingle: (loja_id: string, medidor_id: string) => ["lojaSingle", loja_id,medidor_id],
   user: (id: string) => ["user", id],
   lojas: (
     tipoMedicao: string | null = null,

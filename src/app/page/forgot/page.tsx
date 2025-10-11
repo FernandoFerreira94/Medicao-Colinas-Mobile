@@ -1,20 +1,17 @@
+import { ArrowBack } from "@/src/_components/arrowBack";
 import { recoverRegistration } from "@/src/service/recoverRegistration";
-import { Ionicons } from "@expo/vector-icons";
 import * as Clipboard from "expo-clipboard";
-import { router } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { useToast } from "react-native-toast-notifications";
 import { color } from "../../../constants/color";
@@ -79,7 +76,6 @@ export default function Forgot() {
 
   return (
     <>
-      <StatusBar style="dark" />
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -91,16 +87,7 @@ export default function Forgot() {
         >
           <View style={{ flex: 1, alignItems: "center" }}>
             <View style={styles.header}>
-              <Pressable
-                onPress={() => router.back()}
-                style={{ borderWidth: 1, borderRadius: 8, padding: 1 }}
-              >
-                <Ionicons
-                  name="arrow-back-outline"
-                  size={28}
-                  color={color.gray900}
-                />
-              </Pressable>
+            <ArrowBack />
               <Text
                 style={{
                   fontSize: 18,
