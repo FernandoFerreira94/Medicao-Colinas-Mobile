@@ -1,0 +1,2 @@
+export const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt5aW9yY2JodWR2aXp0emJraWtrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYzOTQwNjEsImV4cCI6MjA3MTk3MDA2MX0.WrEBx7eeX1Y2rr4FeIhu7HVNIKdfcl1QKQDq3e-ePUs"
+export const SUPABASE_URL = "https://kyiorcbhudviztzbkikk.supabase.co"

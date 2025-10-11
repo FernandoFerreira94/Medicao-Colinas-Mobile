@@ -80,6 +80,10 @@ function MainLayout() {
           name="page/forgot/page"
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="page/perfil/page"
+          options={{ headerShown: false }}
+        />
       </Stack>
     </ToastProvider>
   );
