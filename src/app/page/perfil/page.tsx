@@ -7,23 +7,22 @@ import { useState } from "react";
 import { StyleSheet, Switch, Text, View } from "react-native";
 
 export default function Perfil() {
-
   const { user } = useAppContext();
-  console.log(user);
 
   // Caso venha do contexto, você pode trocar esses estados
-  const [medicaoEnergia, setMedicaoEnergia] = useState(user?.permissao_energia ?? false);
+  const [medicaoEnergia, setMedicaoEnergia] = useState(
+    user?.permissao_energia ?? false
+  );
   const [medicaoAgua, setMedicaoAgua] = useState(user?.permissao_agua ?? false);
   const [medicaoGas, setMedicaoGas] = useState(user?.permissao_gas ?? false);
   const [isAdmin, setIsAdmin] = useState(user?.is_adm ?? false);
 
   return (
     <View style={{ flex: 1, backgroundColor: color.roxo }}>
-        <SideBar />
-        <ArrowBack />
-      
-         <Title text={"Perfil"} />
-     
+      <SideBar />
+      <ArrowBack />
+
+      <Title text={"Perfil"} />
 
       <View style={styles.content}>
         {/* Nome completo */}
@@ -47,15 +46,12 @@ export default function Perfil() {
 
           <View style={styles.switchGroup}>
             <SwitchItem label="Admin" value={isAdmin} />
-            
           </View>
         </View>
       </View>
     </View>
   );
 }
-
-
 
 export function InfoItem({ label, value }: { label: string; value?: string }) {
   return (
@@ -68,19 +64,13 @@ export function InfoItem({ label, value }: { label: string; value?: string }) {
   );
 }
 
-function SwitchItem({
-  label,
-  value,
-}: {
-  label: string;
-  value: boolean;
-}) {
+function SwitchItem({ label, value }: { label: string; value: boolean }) {
   return (
     <View style={styles.switchRow}>
       <Text style={styles.text}>{label}</Text>
       <Switch
         value={value}
-        disabled={true} 
+        disabled={true}
         trackColor={{ false: color.gray900, true: color.green }}
         thumbColor={value ? color.white : color.gray900}
       />
@@ -89,8 +79,6 @@ function SwitchItem({
 }
 
 const styles = StyleSheet.create({
-
-
   content: {
     backgroundColor: color.roxoLight,
     width: "100%",
@@ -103,7 +91,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontWeight: "bold",
-    fontSize: 17,
+    fontSize: 16,
     color: color.gray900,
   },
   contentText: {
@@ -113,7 +101,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 14,
     paddingVertical: 8,
-    borderWidth: 1,
   },
   text: {
     color: color.gray900,
@@ -125,11 +112,8 @@ const styles = StyleSheet.create({
     padding: 10,
     gap: 20,
     flexDirection: "row",
-   
   },
   switchRow: {
-    gap: 8
-    
-    
+    gap: 8,
   },
 });

@@ -14,8 +14,11 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  View
+  TouchableOpacity,
+  View,
 } from "react-native";
+
+const ITEMS_PER_PAGE = 20;
 
 export default function Dashboard() {
   const {
@@ -23,7 +26,7 @@ export default function Dashboard() {
     month,
     year,
     localidade,
-  
+
     typeMedicao,
   } = useAppContext();
 
@@ -34,8 +37,6 @@ export default function Dashboard() {
     localidade,
     searchTerm
   );
-
- 
 
   const [filteredLojas, setFilteredLojas] = useState<LojaProps[]>([]);
   const [sortedLojas, setSortedLojas] = useState<LojaProps[]>([]);
@@ -115,16 +116,35 @@ export default function Dashboard() {
     }
   }, [filteredLojas]);
 
+  useEffect(() => {
+    setVisibleCount(ITEMS_PER_PAGE);
+  }, [sortedLojas]);
+
+  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
+
+  const handleLoadMore = () => {
+    setVisibleCount((prevCount) => prevCount + ITEMS_PER_PAGE);
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: color.roxo }}>
       <SideBar />
       <View style={styles.containerSearch}>
         <View style={{ width: "100%", alignItems: "flex-end" }}>
-          <View style={{flexDirection: "row", alignItems:"center", width:"100%", justifyContent:"space-between" }}>
-
-          <Text style={{fontSize: 20, color: color.gray50, fontWeight:"bold"}}>Painel medições
-            </Text> 
-          <MonthYearDropdown />
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              width: "100%",
+              justifyContent: "space-between",
+            }}
+          >
+            <Text
+              style={{ fontSize: 20, color: color.gray50, fontWeight: "bold" }}
+            >
+              Painel medições
+            </Text>
+            <MonthYearDropdown />
           </View>
         </View>
         <View style={styles.contentSearch}>
@@ -187,7 +207,7 @@ export default function Dashboard() {
             {data &&
               (sortedLojas && sortedLojas.length > 0 ? (
                 <>
-                  {sortedLojas.slice(0, 20).map((loja) => {
+                  {sortedLojas.slice(0, visibleCount).map((loja) => {
                     if (!loja.id) {
                       console.error(
                         "ID ausente ou inválido para uma loja:",
@@ -195,8 +215,23 @@ export default function Dashboard() {
                       );
                       return null;
                     }
+
                     return <Card key={loja.id} loja={loja} />;
                   })}
+                  {visibleCount < sortedLojas.length && (
+                    <TouchableOpacity
+                      style={{
+                        alignItems: "center",
+                        paddingTop: 10,
+                        paddingBottom: 20,
+                      }}
+                      onPress={handleLoadMore}
+                    >
+                      <Text style={{ color: color.roxo, fontSize: 16 }}>
+                        Ver mais...
+                      </Text>
+                    </TouchableOpacity>
+                  )}
                 </>
               ) : (
                 <View
@@ -216,13 +251,11 @@ export default function Dashboard() {
           </ScrollView>
         </View>
       </View>
-      
     </View>
   );
 }
 
 const styles = StyleSheet.create({
- 
   content: {
     backgroundColor: color.roxoLight,
     width: "100%",
@@ -230,6 +263,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingTop: 15,
+    paddingBottom: 20,
     paddingHorizontal: 10,
   },
   containerSearch: {

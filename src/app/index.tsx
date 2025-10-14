@@ -78,7 +78,7 @@ export default function Login() {
                 mode="outlined"
                 value={password}
                 onChangeText={setPassword}
-                label="Matricula"
+                label="Senha"
                 placeholder="Digite sua matricula"
                 textColor={color.gray900}
                 activeOutlineColor={color.roxo}

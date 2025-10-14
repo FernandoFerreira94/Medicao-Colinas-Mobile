@@ -10,7 +10,7 @@ export function ArrowBack() {
       style={{
         borderRadius: 10,
         padding: 4,
-        width: 43,
+        width: 36,
         justifyContent: "center",
         alignItems: "center",
         marginLeft: 8,
@@ -18,7 +18,7 @@ export function ArrowBack() {
         backgroundColor: "rgba(255, 255, 255, 0.1)",
       }}
     >
-      <Ionicons name="arrow-back-outline" size={30} color={color.gray50} />
+      <Ionicons name="arrow-back-outline" size={26} color={color.gray50} />
     </Pressable>
   );
 }
