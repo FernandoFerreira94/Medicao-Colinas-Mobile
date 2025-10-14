@@ -1,4 +1,3 @@
-import { Ionicons } from "@expo/vector-icons";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 import {
@@ -9,11 +8,12 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
+import { TextInput as Input } from "react-native-paper";
 import { useToast } from "react-native-toast-notifications";
+import InputPapel from "../_components/InputMatricula";
 import { color } from "../constants/color";
 import { useAppContext } from "../context/useAppContext";
 import { useSignIn } from "../hook/useSignIn";
@@ -66,49 +66,61 @@ export default function Login() {
           <View style={styles.content}>
             <Image source={Logo} style={styles.image} />
             <View style={styles.form}>
-              <Text style={styles.label}>Matricula</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Digite sua matricula"
-                value={matricula}
-                onChangeText={setMatricula}
-                keyboardType="default"
-                placeholderTextColor={color.grayPlaceholder900}
-              />
+              <InputPapel text={matricula} setText={setMatricula} />
 
               <Link href="/page/forgot/page" asChild>
                 <TouchableOpacity style={styles.link}>
                   <Text style={styles.linkText}>Esqueceu sua matricula?</Text>
                 </TouchableOpacity>
               </Link>
-              <View>
-                <Text style={styles.label}>Senha</Text>
-                <View style={styles.passwordInputWrapper}>
-                  <TextInput
-                    value={password}
-                    onChangeText={setPassword}
-                    style={styles.inputPassword}
-                    placeholder="Digite sua senha"
-                    secureTextEntry={!showPassword} // Inverte o valor de showPassword
-                    keyboardType="default"
-                    placeholderTextColor={color.grayPlaceholder900}
-                  />
-                  <TouchableOpacity
-                    onPress={toggleShowPassword}
-                    style={styles.eyeIcon}
-                  >
-                    <Ionicons
-                      name={showPassword ? "eye-off" : "eye"} // Altera o ícone com base no estado
-                      size={20}
-                      color={color.gray900}
+
+              <Input
+                mode="outlined"
+                value={password}
+                onChangeText={setPassword}
+                label="Matricula"
+                placeholder="Digite sua matricula"
+                textColor={color.gray900}
+                activeOutlineColor={color.roxo}
+                placeholderTextColor={color.grayPlaceholder900}
+                style={{
+                  color: color.gray50,
+                  backgroundColor: color.roxoLight,
+                  borderRadius: 24,
+                  borderWidth: 0,
+                  height: 40,
+                  fontSize: 14,
+                }}
+                right={
+                  showPassword ? (
+                    <Input.Icon
+                      size={22}
+                      icon="eye-off"
+                      onPress={toggleShowPassword}
                     />
-                  </TouchableOpacity>
-                </View>
-              </View>
-              <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                <Text style={styles.buttonText}>
-                  {isPending ? <ActivityIndicator size={"small"} /> : "Entrar"}
-                </Text>
+                  ) : (
+                    <Input.Icon
+                      size={22}
+                      icon="eye"
+                      onPress={toggleShowPassword}
+                    />
+                  )
+                }
+                secureTextEntry={!showPassword}
+              />
+
+              <TouchableOpacity
+                style={styles.button}
+                activeOpacity={0.9}
+                onPress={handleLogin}
+              >
+                {isPending ? (
+                  <View style={styles.buttonText}>
+                    <ActivityIndicator size={"small"} color={color.gray50} />
+                  </View>
+                ) : (
+                  <Text style={{ color: color.gray50 }}>Acessar</Text>
+                )}
               </TouchableOpacity>
             </View>
           </View>
@@ -176,8 +188,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonText: {
+    width: "100%",
     color: color.white,
     fontWeight: "600",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    gap: 10,
   },
   passwordInputWrapper: {
     flexDirection: "row", // Para colocar o TextInput e o ícone na mesma linha
