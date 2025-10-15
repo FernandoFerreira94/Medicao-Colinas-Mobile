@@ -21,6 +21,7 @@ export function AppProvider({ children }: AppProviderProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [localidade, setLocalidade] = useState<string>("all");
   const [typeMedicao, setTypeMedicao] = useState("Energia");
+  const [theme, setTheme] = useState(true);
 
   const [month, setMonth] = useState(initialMonth);
   const [year, setYear] = useState(initialYear);
@@ -42,6 +43,8 @@ export function AppProvider({ children }: AppProviderProps) {
         session,
         setSession,
         setUser,
+        theme,
+        setTheme,
       }}
     >
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>

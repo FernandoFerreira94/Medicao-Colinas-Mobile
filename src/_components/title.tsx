@@ -1,23 +1,21 @@
-import { StyleSheet, Text, View } from "react-native"
-import { color } from "../constants/color"
+import { StyleSheet, Text, View } from "react-native";
+import { useThemeColors } from "../hook/useThemeColors";
 
-export function Title({text}: {text: string}){
-    return(
-      <View style={styles.header}>
-        
-        <Text style={styles.headerText}>{text}</Text>
-      </View>
-    )
+export function Title({ text }: { text: string }) {
+  const color = useThemeColors();
+  return (
+    <View style={styles.header}>
+      <Text style={[styles.headerText, { color: color.gray50 }]}>{text}</Text>
+    </View>
+  );
 }
 
-
 const styles = StyleSheet.create({
-  
   headerText: {
     fontSize: 20,
-    color: color.gray50,
     fontWeight: "bold",
-  },  header: {
+  },
+  header: {
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
@@ -25,4 +23,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     marginBottom: 20,
   },
-})
+});

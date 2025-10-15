@@ -15,6 +15,8 @@ interface AppContextType {
   setUser: (user: UsuarioProps | null) => void;
   session: any;
   setSession: (session: any) => void;
+  theme: boolean;
+  setTheme: (value: boolean) => void;
 }
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);

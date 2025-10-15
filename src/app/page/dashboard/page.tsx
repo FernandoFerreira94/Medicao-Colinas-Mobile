@@ -4,9 +4,9 @@ import { InputSeracrh } from "@/src/_components/InputSeracrh";
 import { Localidade } from "@/src/_components/localidade";
 import { SideBar } from "@/src/_components/sideBar";
 import { TypeMEdicao } from "@/src/_components/typeMedicao";
-import { color } from "@/src/constants/color";
 import { useAppContext } from "@/src/context/useAppContext";
 import { useFetchAllLojas } from "@/src/hook/useFetchAllLojas";
+import { useThemeColors } from "@/src/hook/useThemeColors";
 import { LojaProps } from "@/src/types";
 import React, { useEffect, useState } from "react";
 import {
@@ -19,8 +19,8 @@ import {
 } from "react-native";
 
 const ITEMS_PER_PAGE = 20;
-
 export default function Dashboard() {
+  const color = useThemeColors();
   const {
     searchTerm,
     month,
@@ -162,7 +162,7 @@ export default function Dashboard() {
           alignItems: "center",
         }}
       >
-        <View style={styles.content}>
+        <View style={[styles.content, { backgroundColor: color.roxoLight }]}>
           <View
             style={{
               flexDirection: "row",
@@ -178,7 +178,7 @@ export default function Dashboard() {
                 fontSize: 14,
               }}
             >
-              Ativos ( {activeLeituras} / {activeCount} ){" "}
+              Ativos ( {activeLeituras} / {activeCount} )
             </Text>
             <Text
               style={{
@@ -187,7 +187,7 @@ export default function Dashboard() {
                 fontSize: 14,
               }}
             >
-              Vagos ( {vacanLeitura} / {vacantCount} ){" "}
+              Vagos ( {vacanLeitura} / {vacantCount} )
             </Text>
           </View>
           <ScrollView style={{ width: "100%" }}>
@@ -257,7 +257,6 @@ export default function Dashboard() {
 
 const styles = StyleSheet.create({
   content: {
-    backgroundColor: color.roxoLight,
     width: "100%",
     height: "100%",
     borderTopLeftRadius: 30,

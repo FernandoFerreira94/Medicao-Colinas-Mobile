@@ -1,18 +1,20 @@
 import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, TextInput, View } from "react-native";
-import { color } from "../constants/color";
 import { useAppContext } from "../context/useAppContext";
+import { useThemeColors } from "../hook/useThemeColors";
 
 export function InputSeracrh() {
+  const color = useThemeColors();
   const { searchTerm, setSearchTerm } = useAppContext();
   return (
     <View style={styles.container}>
       <Ionicons name="search" size={20} color={color.gray900} />
       <TextInput
         placeholder="Pesquisar nome ou numero do relogio"
-        style={styles.input}
+        style={[styles.input, { color: color.gray900 }]}
         value={searchTerm}
         onChangeText={setSearchTerm}
+        placeholderTextColor={color.gray900}
       />
     </View>
   );
@@ -33,6 +35,5 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 40,
     marginLeft: 10,
-    color: color.gray900,
   },
 });

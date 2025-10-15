@@ -10,9 +10,10 @@ import {
   View,
 } from "react-native";
 import { useAppContext } from "../../src/context/useAppContext";
-import { color } from "../constants/color";
+import { useThemeColors } from "../hook/useThemeColors";
 
 export function MonthYearDropdown() {
+  const color = useThemeColors();
   const { month, year, setMonth, setYear } = useAppContext();
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -39,10 +40,13 @@ export function MonthYearDropdown() {
   return (
     <View>
       <TouchableOpacity
-        style={styles.trigger}
+        style={[
+          styles.trigger,
+          { borderColor: color.roxo, backgroundColor: color.white },
+        ]}
         onPress={() => setModalVisible(true)}
       >
-        <Text style={styles.triggerText}>
+        <Text style={[styles.triggerText, { color: color.gray900 }]}>
           {month && year
             ? `${months[month - 1]} / ${year}`
             : "Selecione mês/ano"}
@@ -57,7 +61,7 @@ export function MonthYearDropdown() {
         onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
+          <View style={[styles.modalContent, { backgroundColor: color.white }]}>
             <Text style={styles.modalTitle}>Selecione mês e ano</Text>
 
             <View style={styles.pickersRow}>
@@ -69,7 +73,6 @@ export function MonthYearDropdown() {
               >
                 {months.map((m, i) => (
                   <Picker.Item key={i} label={m} value={i + 1} />
-                  
                 ))}
               </Picker>
 
@@ -85,8 +88,13 @@ export function MonthYearDropdown() {
               </Picker>
             </View>
 
-            <Pressable style={styles.confirmButton} onPress={handleConfirm}>
-              <Text style={styles.confirmText}>Confirmar</Text>
+            <Pressable
+              style={[styles.confirmButton, { backgroundColor: color.roxo }]}
+              onPress={handleConfirm}
+            >
+              <Text style={[styles.confirmText, { color: color.gray50 }]}>
+                Confirmar
+              </Text>
             </Pressable>
           </View>
         </View>
@@ -99,17 +107,14 @@ const styles = StyleSheet.create({
   trigger: {
     borderWidth: 1,
     height: 35,
-    borderColor: color.roxo,
     paddingHorizontal: 10,
     borderRadius: 8,
-    backgroundColor: color.white,
-
     flexDirection: "row", // para ícone e texto ficarem lado a lado
     justifyContent: "flex-end",
     gap: 10,
     alignItems: "center",
   },
-  triggerText: { fontSize: 14, color: color.gray900 },
+  triggerText: { fontSize: 14 },
   modalOverlay: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.8)",
@@ -117,7 +122,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalContent: {
-    backgroundColor: color.white,
     padding: 10,
     borderRadius: 12,
     width: "90%",
@@ -127,10 +131,12 @@ const styles = StyleSheet.create({
   pickersRow: { flexDirection: "row", gap: 10 },
   picker: { height: 240, width: 140 },
   confirmButton: {
-    backgroundColor: color.roxo,
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 8,
   },
-  confirmText: { color: color.gray50, fontSize: 16, fontWeight: "500" },
+  confirmText: {
+    fontSize: 16,
+    fontWeight: "500",
+  },
 });

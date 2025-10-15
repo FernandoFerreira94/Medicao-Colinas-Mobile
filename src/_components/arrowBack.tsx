@@ -1,9 +1,10 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Pressable } from "react-native";
-import { color } from "../constants/color";
+import { useThemeColors } from "../hook/useThemeColors";
 
 export function ArrowBack() {
+  const color = useThemeColors();
   return (
     <Pressable
       onPress={() => router.back()}

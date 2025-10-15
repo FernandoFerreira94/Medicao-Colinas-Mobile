@@ -1,6 +1,6 @@
 import * as React from "react";
 import { TextInput } from "react-native-paper";
-import { color } from "../constants/color";
+import { useThemeColors } from "../hook/useThemeColors";
 
 const InputMatricula = ({
   text,
@@ -9,6 +9,7 @@ const InputMatricula = ({
   text: string;
   setText: React.Dispatch<React.SetStateAction<string>>;
 }) => {
+  const color = useThemeColors();
   return (
     <TextInput
       mode="outlined"

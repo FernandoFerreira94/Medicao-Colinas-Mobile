@@ -1,4 +1,5 @@
 import { ArrowBack } from "@/src/_components/arrowBack";
+import { useThemeColors } from "@/src/hook/useThemeColors";
 import { recoverRegistration } from "@/src/service/recoverRegistration";
 import * as Clipboard from "expo-clipboard";
 import React, { useState } from "react";
@@ -11,12 +12,12 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 import { useToast } from "react-native-toast-notifications";
-import { color } from "../../../constants/color";
 
 export default function Forgot() {
+  const color = useThemeColors();
   const [nomeCompleto, setCnomeCompleto] = useState("");
   const [matriculaRecover, setMatriculaRecover] = useState("");
   const [required, serRequired] = useState("");
@@ -77,7 +78,7 @@ export default function Forgot() {
   return (
     <>
       <KeyboardAvoidingView
-        style={{ flex: 1 }}
+        style={{ flex: 1, backgroundColor: color.roxo }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <ScrollView
@@ -87,11 +88,11 @@ export default function Forgot() {
         >
           <View style={{ flex: 1, alignItems: "center" }}>
             <View style={styles.header}>
-            <ArrowBack />
+              <ArrowBack />
               <Text
                 style={{
                   fontSize: 18,
-                  color: color.gray900,
+                  color: color.gray50,
                   fontWeight: "semibold",
                 }}
               >
@@ -99,13 +100,14 @@ export default function Forgot() {
               </Text>
             </View>
             <View style={styles.content}>
-              <Text style={{ fontSize: 16, color: color.gray50 }}>
+              <Text style={{ fontSize: 16, color: color.gray900 }}>
                 Digite seu nome completo
               </Text>
               <TextInput
                 style={[
                   styles.input,
                   required !== "" && { borderWidth: 2, borderColor: "red" },
+                  { backgroundColor: color.white },
                 ]}
                 placeholder="Digite seu nome completo"
                 value={nomeCompleto}
@@ -117,7 +119,10 @@ export default function Forgot() {
                   {required}
                 </Text>
               )}
-              <TouchableOpacity style={styles.button} onPress={handleVerificar}>
+              <TouchableOpacity
+                style={[styles.button, { backgroundColor: color.roxo }]}
+                onPress={handleVerificar}
+              >
                 <Text
                   style={{
                     color: color.gray50,
@@ -126,7 +131,7 @@ export default function Forgot() {
                   }}
                 >
                   {isLoading ? (
-                    <ActivityIndicator size="small" color="#fff" />
+                    <ActivityIndicator size="small" color={color.gray50} />
                   ) : (
                     "Verificar"
                   )}
@@ -136,17 +141,24 @@ export default function Forgot() {
               {matriculaRecover && (
                 <View>
                   <Text
-                    style={{ fontSize: 16, color: color.gray50, marginTop: 10 }}
+                    style={{
+                      fontSize: 16,
+                      color: color.gray900,
+                      marginTop: 10,
+                    }}
                   >
                     Matricula: {matriculaRecover}
                   </Text>
                   <TouchableOpacity
-                    style={styles.buttonDefault}
+                    style={[
+                      styles.button,
+                      { backgroundColor: color.white, borderColor: color.roxo },
+                    ]}
                     onPress={handleCopy}
                   >
                     <Text
                       style={{
-                        color: color.gray900,
+                        color: color.roxo,
                         fontWeight: "semibold",
                         fontSize: 16,
                       }}
@@ -166,7 +178,7 @@ export default function Forgot() {
 
 const styles = StyleSheet.create({
   header: {
-    marginTop: 40,
+    marginTop: 50,
     marginBottom: 20,
     width: "100%",
     flexDirection: "row",
@@ -177,7 +189,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   content: {
-    backgroundColor: color.roxo,
+    backgroundColor: "#fff",
     width: "100%",
     height: "100%",
     borderTopLeftRadius: 30,
@@ -191,16 +203,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: "100%",
     padding: 12,
-    backgroundColor: color.roxoLight,
+
     borderRadius: 10,
     paddingHorizontal: 14,
   },
   button: {
     width: "100%",
     padding: 12,
-    borderWidth: 2,
     borderRadius: 10,
-    borderColor: color.gray50,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 10,
@@ -211,7 +221,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: color.white,
     marginTop: 20,
+    borderWidth: 3,
   },
 });

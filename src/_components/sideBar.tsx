@@ -1,4 +1,3 @@
-import { color } from "@/src/constants/color";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -12,11 +11,13 @@ import {
 } from "react-native";
 import { Toast } from "react-native-toast-notifications";
 import { useAppContext } from "../context/useAppContext";
+import { useThemeColors } from "../hook/useThemeColors";
 import { supabase } from "../lib/supabase";
 
 const { width, height } = Dimensions.get("window");
 
 export function SideBar() {
+  const color = useThemeColors();
   const { user, setUser } = useAppContext();
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -44,7 +45,6 @@ export function SideBar() {
   async function handleDeslogar() {
     const { data: sessionData } = await supabase.auth.getSession();
     setUser(null);
-    console.log("Sessão atual:", sessionData);
     try {
       const { error } = await supabase.auth.signOut();
       if (error) {
@@ -62,8 +62,8 @@ export function SideBar() {
   }
   return (
     <>
-      <View style={styles.header}>
-        <Text style={styles.title}>
+      <View style={[styles.header, { backgroundColor: color.roxo }]}>
+        <Text style={[styles.title, { color: color.gray50 }]}>
           {firstName} - {user?.funcao}
         </Text>
         <TouchableOpacity onPress={toggleMenu} style={styles.hamburger}>
@@ -77,9 +77,21 @@ export function SideBar() {
           activeOpacity={1}
           onPress={toggleMenu}
         >
-          <Animated.View style={[styles.sideMenu, { left: menuAnim }]}>
-            <View style={styles.menuHeader}>
-              <Text style={styles.menuTitle}>Menu</Text>
+          <Animated.View
+            style={[
+              styles.sideMenu,
+              { left: menuAnim, backgroundColor: color.white },
+            ]}
+          >
+            <View style={[styles.menuHeader, { backgroundColor: color.roxo }]}>
+              <Text
+                style={[
+                  styles.menuTitle,
+                  { backgroundColor: color.roxo, color: color.gray50 },
+                ]}
+              >
+                Menu
+              </Text>
             </View>
 
             <TouchableOpacity
@@ -87,7 +99,9 @@ export function SideBar() {
               onPress={() => router.replace("/page/dashboard/page")}
             >
               <Ionicons name="grid-outline" size={24} color="#3D3C6C" />
-              <Text style={styles.menuText}>Painel</Text>
+              <Text style={[styles.menuText, { color: color.roxo }]}>
+                Painel
+              </Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -95,11 +109,13 @@ export function SideBar() {
               onPress={() => router.push("/page/perfil/page")}
             >
               <Ionicons name="person-outline" size={24} color="#3D3C6C" />
-              <Text style={styles.menuText}>Perfil</Text>
+              <Text style={[styles.menuText, { color: color.roxo }]}>
+                Perfil
+              </Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={styles.menuItemOut}
+              style={[styles.menuItemOut, { backgroundColor: color.red }]}
               onPress={handleDeslogar}
             >
               <Ionicons name="log-out-outline" size={24} color={color.gray50} />
@@ -118,14 +134,12 @@ const styles = StyleSheet.create({
   header: {
     marginTop: 45,
     marginBottom: 10,
-    backgroundColor: color.roxo,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 15,
   },
   title: {
-    color: "#fff",
     fontSize: 18,
     fontWeight: "bold",
   },
@@ -148,19 +162,16 @@ const styles = StyleSheet.create({
     top: 0,
     width: width / 2,
     height: height,
-    backgroundColor: "#fff",
   },
   menuHeader: {
     width: "100%",
     height: 100,
-    backgroundColor: color.roxo,
+
     justifyContent: "center",
     alignItems: "center",
     paddingTop: 50,
   },
   menuTitle: {
-    backgroundColor: "#3D3C6C",
-    color: "#fff",
     fontSize: 20,
   },
   menuItem: {
@@ -178,31 +189,9 @@ const styles = StyleSheet.create({
     gap: 15,
     marginTop: "auto",
     marginBottom: 40,
-    backgroundColor: color.red,
   },
   menuText: {
     fontSize: 16,
-    color: "#3D3C6C",
   },
-  content: {
-    backgroundColor: color.roxoLight,
-    width: "100%",
-    height: "100%",
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    paddingTop: 15,
-    paddingHorizontal: 10,
-  },
-  containerSearch: {
-    width: "100%",
-    paddingHorizontal: 14,
-    paddingBottom: 16,
-    gap: 10,
-  },
-  contentSearch: {
-    width: "100%",
-    flexDirection: "row",
-    gap: 4,
-    justifyContent: "space-between",
-  },
+
 });

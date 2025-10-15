@@ -38,7 +38,7 @@ export interface MedidorComLeitura {
   ultima_leitura: number;
   detalhes: string;
   data_instalacao: string;
-  quadro_distribuicao: string
+  quadro_distribuicao: string;
   leituras: LeituraProps[]; // Adicione a leitura aqui, como um array
 }
 
@@ -52,8 +52,8 @@ export interface LeituraProps {
   consumo_anterior?: number;
   foto_url?: string | null;
   detalhes_leitura?: string | null;
-  nome_loja_leitura?: string;
-  medidor_id?: string;
+  nome_loja_leitura: string;
+  medidor_id: string;
   nome_usuario: string;
   medidor?: string;
 }

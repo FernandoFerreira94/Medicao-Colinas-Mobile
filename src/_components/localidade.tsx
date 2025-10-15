@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import { color } from "../constants/color";
 import { useAppContext } from "../context/useAppContext";
+import { useThemeColors } from "../hook/useThemeColors";
 
 export function Localidade() {
+  const color = useThemeColors();
   const { localidade, setLocalidade } = useAppContext();
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([
@@ -44,7 +45,10 @@ export function Localidade() {
         }}
         setItems={setItems}
         placeholder="Selecione a localidade"
-        style={styles.dropdown}
+        style={[
+          styles.dropdown,
+          { borderColor: color.gray900, backgroundColor: color.white },
+        ]}
         dropDownContainerStyle={styles.dropdownContainer}
         textStyle={styles.text}
         listItemContainerStyle={styles.listItemContainer}
@@ -59,9 +63,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   dropdown: {
-    borderColor: color.gray900,
     borderRadius: 6,
-    backgroundColor: "#fff",
     minHeight: 40,
     paddingVertical: 2,
   },

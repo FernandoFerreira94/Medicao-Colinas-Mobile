@@ -14,17 +14,18 @@ import {
 import { TextInput as Input } from "react-native-paper";
 import { useToast } from "react-native-toast-notifications";
 import InputPapel from "../_components/InputMatricula";
-import { color } from "../constants/color";
 import { useAppContext } from "../context/useAppContext";
 import { useSignIn } from "../hook/useSignIn";
+import { useThemeColors } from "../hook/useThemeColors";
 import Logo from "../image/Logo.png";
 
 export default function Login() {
   const { setUser, setSession } = useAppContext();
+  const color = useThemeColors();
 
   const toast = useToast();
-  const [matricula, setMatricula] = useState("155157");
-  const [password, setPassword] = useState("454184");
+  const [matricula, setMatricula] = useState("colinas");
+  const [password, setPassword] = useState("colinasshopping");
   const [showPassword, setShowPassword] = useState(false);
 
   const { mutate, isPending } = useSignIn({
@@ -35,7 +36,6 @@ export default function Login() {
     },
     onError: (error) => {
       toast.show("Erro ao realizar login!" + error, { type: "danger" });
-      console.log(error);
     },
   });
 
@@ -62,15 +62,17 @@ export default function Login() {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
-        <View style={styles.container}>
-          <View style={styles.content}>
+        <View style={[styles.container, { backgroundColor: color.roxo }]}>
+          <View style={[styles.content, { backgroundColor: color.white }]}>
             <Image source={Logo} style={styles.image} />
             <View style={styles.form}>
               <InputPapel text={matricula} setText={setMatricula} />
 
               <Link href="/page/forgot/page" asChild>
                 <TouchableOpacity style={styles.link}>
-                  <Text style={styles.linkText}>Esqueceu sua matricula?</Text>
+                  <Text style={[styles.linkText, { color: color.gray900 }]}>
+                    Esqueceu sua matricula?
+                  </Text>
                 </TouchableOpacity>
               </Link>
 
@@ -110,12 +112,12 @@ export default function Login() {
               />
 
               <TouchableOpacity
-                style={styles.button}
+                style={[styles.button, { backgroundColor: color.roxo }]}
                 activeOpacity={0.9}
                 onPress={handleLogin}
               >
                 {isPending ? (
-                  <View style={styles.buttonText}>
+                  <View style={[styles.buttonText]}>
                     <ActivityIndicator size={"small"} color={color.gray50} />
                   </View>
                 ) : (
@@ -135,13 +137,11 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
-    backgroundColor: color.roxo,
     justifyContent: "center",
     alignItems: "center",
   },
   content: {
     width: "90%",
-    backgroundColor: color.white,
     paddingBottom: 20,
     paddingTop: 30,
     borderRadius: 20,
@@ -156,32 +156,20 @@ const styles = StyleSheet.create({
   form: {
     width: "90%",
   },
-  label: {
-    color: color.gray900,
-    fontSize: 16,
-  },
-  input: {
-    width: "100%",
-    padding: 10,
-    backgroundColor: color.roxoLight,
-    borderRadius: 10,
-    marginVertical: 8,
-    paddingHorizontal: 14,
-    color: color.gray900,
-  },
+
   link: {
     width: "100%",
     alignItems: "flex-end",
-    marginBottom: 4,
+    marginBottom: 8,
+    marginTop: 8,
   },
   linkText: {
-    color: color.gray900,
     fontSize: 14,
   },
   button: {
     width: "100%",
     padding: 12,
-    backgroundColor: color.roxo,
+
     borderRadius: 10,
     marginVertical: 10,
     alignItems: "center",
@@ -189,28 +177,11 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     width: "100%",
-    color: color.white,
     fontWeight: "600",
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
     gap: 10,
   },
-  passwordInputWrapper: {
-    flexDirection: "row", // Para colocar o TextInput e o ícone na mesma linha
-    alignItems: "center",
-    paddingHorizontal: 10,
-    marginTop: 8,
-    borderRadius: 10,
-    backgroundColor: color.roxoLight,
-  },
-  inputPassword: {
-    flex: 1, // Permite que o TextInput ocupe o espaço restante
-    padding: 10,
-    color: color.gray900,
-  },
-  eyeIcon: {
-    paddingRight: 10, // Espaçamento à direita do ícone
-    paddingLeft: 5, // Espaçamento à esquerda do ícone
-  },
+
 });

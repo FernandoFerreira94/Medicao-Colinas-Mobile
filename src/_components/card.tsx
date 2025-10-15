@@ -1,10 +1,11 @@
 import { router } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { truncateText } from "../action/truncateText";
-import { color } from "../constants/color";
+import { useThemeColors } from "../hook/useThemeColors";
 import { LojaProps } from "../types";
 
 export default function Card({ loja }: { loja: LojaProps }) {
+  const color = useThemeColors();
   const isToDetailLoja = (idLoja: string, idMedidor: string) => {
     if (idLoja && idMedidor) {
       router.push({
@@ -29,10 +30,13 @@ export default function Card({ loja }: { loja: LojaProps }) {
         loja.medidores[0]?.leituras[0]?.leitura_atual
           ? { borderColor: color.green }
           : { borderColor: color.red },
+        { backgroundColor: color.white },
       ]}
     >
       <View style={styles.cardHeader}>
-        <Text style={styles.cardTitle}>{truncateText(loja.nome_loja, 17)}</Text>
+        <Text style={[styles.cardTitle, { color: color.gray900 }]}>
+          {truncateText(loja.nome_loja, 17)}
+        </Text>
         <View
           style={{
             flexDirection: "row",
@@ -41,8 +45,8 @@ export default function Card({ loja }: { loja: LojaProps }) {
             alignItems: "center",
           }}
         >
-          <Text style={styles.cardTitle}>
-            {loja.prefixo_loja} - {truncateText(loja.numero_loja, 8)}{" "}
+          <Text style={[styles.cardTitle, { color: color.gray900 }]}>
+            {loja.prefixo_loja} - {truncateText(loja.numero_loja, 8)}
           </Text>
           <View
             style={[
@@ -60,20 +64,26 @@ export default function Card({ loja }: { loja: LojaProps }) {
         </View>
       </View>
       <View style={styles.cardHeader}>
-        <Text style={styles.cardSpan}>Nº relogio</Text>
-        <Text style={styles.cardSpan}>
+        <Text style={[styles.cardSpan, { color: color.gray900 }]}>
+          Nº relogio
+        </Text>
+        <Text style={[styles.cardSpan, { color: color.gray900 }]}>
           {loja?.medidores[0]?.numero_relogio || "xxx-xxx-xxx"}
         </Text>
       </View>
       <View style={styles.cardHeader}>
-        <Text style={styles.cardSpan}>Localidade</Text>
-        <Text style={styles.cardSpan}>
+        <Text style={[styles.cardSpan, { color: color.gray900 }]}>
+          Localidade
+        </Text>
+        <Text style={[styles.cardSpan, { color: color.gray900 }]}>
           {loja?.medidores[0]?.localidade || "Outros"}
         </Text>
       </View>
       <View style={styles.cardHeader}>
-        <Text style={styles.cardSpan}>Leitura mês anterior</Text>
-        <Text style={styles.cardSpan}>
+        <Text style={[styles.cardSpan, { color: color.gray900 }]}>
+          Leitura mês anterior
+        </Text>
+        <Text style={[styles.cardSpan, { color: color.gray900 }]}>
           {loja?.medidores[0]?.ultima_leitura}
         </Text>
       </View>
@@ -84,6 +94,9 @@ export default function Card({ loja }: { loja: LojaProps }) {
             styles.btnCardDefault,
             isVerificad && {
               backgroundColor: color.grayPlaceholder900,
+            },
+            {
+              backgroundColor: color.roxo,
             },
           ]}
           onPress={() => {
@@ -96,6 +109,9 @@ export default function Card({ loja }: { loja: LojaProps }) {
             style={[
               styles.btnTextSecondary,
               isVerificad && { color: color.gray50 },
+              {
+                color: color.gray50,
+              },
             ]}
           >
             Medição
@@ -109,7 +125,6 @@ export default function Card({ loja }: { loja: LojaProps }) {
 const styles = StyleSheet.create({
   card: {
     width: "100%",
-    backgroundColor: color.white,
     borderRadius: 16,
     paddingVertical: 10,
     paddingHorizontal: 14,
@@ -131,11 +146,9 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 14,
     fontWeight: "bold",
-    color: color.gray900,
   },
   cardSpan: {
     fontSize: 13,
-    color: color.gray900,
   },
   cardButtonsWrapper: {
     flexDirection: "row",
@@ -146,20 +159,13 @@ const styles = StyleSheet.create({
 
   btnCardDefault: {
     width: "100%",
-
     height: 35,
-    backgroundColor: color.roxo,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
   },
-  btnTextPrimary: {
-    color: color.roxo,
-    fontWeight: "600",
-    fontSize: 13,
-  },
+
   btnTextSecondary: {
-    color: color.gray50,
     fontWeight: "600",
     fontSize: 13,
   },
