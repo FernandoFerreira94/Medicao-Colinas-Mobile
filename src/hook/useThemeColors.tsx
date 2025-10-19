@@ -18,6 +18,7 @@ export function useThemeColors() {
     return {
       // Cor Dinâmica (Principal)
       roxo: roxoCorPrimaria,
+      roxoPlaceholder: BASE_COLORS.ROXO_BASEPLACEHOLDER,
 
       // Cores Estáticas (Ou ajuste se necessário)
       roxoDark: BASE_COLORS.ROXO_ESCURO,

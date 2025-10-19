@@ -32,12 +32,18 @@ export default function Forgot() {
     toast.show("Matricula copiada com sucesso!", { type: "success" });
   };
 
+  function limparEspacoFinal(nomeCompleto: string): string {
+  return nomeCompleto.replace(/\s+$/, "");
+}
+
+
   async function handleVerificar() {
     if (!nomeCompleto || nomeCompleto === " ") {
       serRequired("Campo obrigatorio!!!");
       return;
     }
-    const result = await recoverRegistration(nomeCompleto);
+    const nomeFiltradov = limparEspacoFinal(nomeCompleto)
+    const result = await recoverRegistration(nomeFiltradov);
     setLoading(true);
 
     if (result?.error) {
@@ -99,9 +105,9 @@ export default function Forgot() {
                 Recuperar matricula
               </Text>
             </View>
-            <View style={styles.content}>
+            <View style={[styles.content,{backgroundColor: color.roxoLight}]}>
               <Text style={{ fontSize: 16, color: color.gray900 }}>
-                Digite seu nome completo
+                Nome completo
               </Text>
               <TextInput
                 style={[
@@ -152,7 +158,8 @@ export default function Forgot() {
                   <TouchableOpacity
                     style={[
                       styles.button,
-                      { backgroundColor: color.white, borderColor: color.roxo },
+                      { backgroundColor: color.white, borderColor: color.roxo ,  borderWidth: 1,
+                        },
                     ]}
                     onPress={handleCopy}
                   >
@@ -161,6 +168,7 @@ export default function Forgot() {
                         color: color.roxo,
                         fontWeight: "semibold",
                         fontSize: 16,
+                       
                       }}
                     >
                       Copiar
@@ -189,7 +197,6 @@ const styles = StyleSheet.create({
     height: 50,
   },
   content: {
-    backgroundColor: "#fff",
     width: "100%",
     height: "100%",
     borderTopLeftRadius: 30,
@@ -203,7 +210,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: "100%",
     padding: 12,
-
+    borderWidth: 1,
     borderRadius: 10,
     paddingHorizontal: 14,
   },

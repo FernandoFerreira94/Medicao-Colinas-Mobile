@@ -56,4 +56,5 @@ export interface LeituraProps {
   medidor_id: string;
   nome_usuario: string;
   medidor?: string;
+  photo_uri?:string
 }

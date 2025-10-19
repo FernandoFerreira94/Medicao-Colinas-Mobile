@@ -1,11 +1,17 @@
 import { router } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { truncateText } from "../action/truncateText";
+import { useAppContext } from "../context/useAppContext";
 import { useThemeColors } from "../hook/useThemeColors";
 import { LojaProps } from "../types";
 
+
+const date = new Date()
+const day = date.getDate()
+
 export default function Card({ loja }: { loja: LojaProps }) {
   const color = useThemeColors();
+  const {user} = useAppContext()
   const isToDetailLoja = (idLoja: string, idMedidor: string) => {
     if (idLoja && idMedidor) {
       router.push({
@@ -14,6 +20,7 @@ export default function Card({ loja }: { loja: LojaProps }) {
       });
     }
   };
+  
   const verifi = () => {
     if (loja?.medidores[0]?.leituras[0]?.leitura_atual) {
       return true;
@@ -23,11 +30,32 @@ export default function Card({ loja }: { loja: LojaProps }) {
 
   const isVerificad = verifi();
 
+   const shouldDisableButton2 = () => {
+    if (user?.is_adm) {
+      return false;
+    }
+    const isShouldDisable =  day < 27;
+    return isShouldDisable;
+  };
+  const shouldDisable = shouldDisableButton2();
+
+const textoMedicao = isVerificad
+  ? "Medição coletada"
+  : shouldDisable 
+    ? `Medição liberada apos dia 27, hoje: ${day}` 
+    : "Medição"; 
+
+const btnDisable = isVerificad
+  ? false
+  : shouldDisable 
+    ? true 
+    : false; 
+
   return (
     <View
       style={[
         styles.card,
-        loja.medidores[0]?.leituras[0]?.leitura_atual
+        isVerificad
           ? { borderColor: color.green }
           : { borderColor: color.red },
         { backgroundColor: color.white },
@@ -92,18 +120,15 @@ export default function Card({ loja }: { loja: LojaProps }) {
         <TouchableOpacity
           style={[
             styles.btnCardDefault,
-            isVerificad && {
-              backgroundColor: color.grayPlaceholder900,
-            },
-            {
-              backgroundColor: color.roxo,
-            },
+         { backgroundColor : isVerificad || shouldDisable ? color.roxoPlaceholder
+              : color.roxo,}
           ]}
           onPress={() => {
             if (loja?.id && loja?.medidores[0].id) {
               isToDetailLoja(loja?.id, loja?.medidores[0]?.id);
             }
           }}
+            disabled={btnDisable}
         >
           <Text
             style={[
@@ -113,9 +138,7 @@ export default function Card({ loja }: { loja: LojaProps }) {
                 color: color.gray50,
               },
             ]}
-          >
-            Medição
-          </Text>
+          >{textoMedicao}          </Text>
         </TouchableOpacity>
       </View>
     </View>

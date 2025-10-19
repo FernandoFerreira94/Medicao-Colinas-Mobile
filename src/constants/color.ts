@@ -2,6 +2,7 @@
 export const BASE_COLORS = {
   // Cores Primárias de Tema
   ROXO_BASE: "#3D3C6C", // Roxo base
+  ROXO_BASEPLACEHOLDER: "#3d3c6c73", // Roxo base
   ROXO_ESCURO: "#151526", // Roxo para o tema escuro
   ROXO_CLARO: "#ECECF0", // Roxo para o tema claro
   ESCURO: "#1f2736ff",

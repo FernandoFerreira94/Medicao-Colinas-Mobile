@@ -10,23 +10,24 @@ import { useThemeColors } from "@/src/hook/useThemeColors";
 import { LojaProps } from "@/src/types";
 import React, { useEffect, useState } from "react";
 import {
-  ActivityIndicator,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-
+import { ActivityIndicator } from "react-native-paper";
 const ITEMS_PER_PAGE = 20;
+
 export default function Dashboard() {
+
   const color = useThemeColors();
   const {
     searchTerm,
     month,
     year,
     localidade,
-
+    
     typeMedicao,
   } = useAppContext();
 
@@ -126,6 +127,7 @@ export default function Dashboard() {
     setVisibleCount((prevCount) => prevCount + ITEMS_PER_PAGE);
   };
 
+
   return (
     <View style={{ flex: 1, backgroundColor: color.roxo }}>
       <SideBar />
@@ -163,7 +165,25 @@ export default function Dashboard() {
         }}
       >
         <View style={[styles.content, { backgroundColor: color.roxoLight }]}>
-          <View
+         
+          <ScrollView style={{ width: "100%" }}>
+            {isLoading && (
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: 100,
+                  width: "100%",
+                  gap:12
+                }}
+              >
+                <ActivityIndicator size="large" color={color.roxo} />
+                <Text style={{fontSize: 16, fontWeight: "semibold"}}>Carregando lojas...</Text>
+              </View>
+            )}
+            {data &&
+              (sortedLojas && sortedLojas.length > 0 ? (
+                <><View
             style={{
               flexDirection: "row",
               gap: 10,
@@ -190,23 +210,6 @@ export default function Dashboard() {
               Vagos ( {vacanLeitura} / {vacantCount} )
             </Text>
           </View>
-          <ScrollView style={{ width: "100%" }}>
-            {isLoading && (
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: 100,
-                  width: "100%",
-                }}
-              >
-                <ActivityIndicator size="large" color={color.roxo} />
-                <Text>Carregando...</Text>
-              </View>
-            )}
-            {data &&
-              (sortedLojas && sortedLojas.length > 0 ? (
-                <>
                   {sortedLojas.slice(0, visibleCount).map((loja) => {
                     if (!loja.id) {
                       console.error(

@@ -26,6 +26,7 @@ export function Localidade() {
     { label: "Torre-Comercial", value: "Torre-Comercial" },
     { label: "Loja", value: "Loja" },
     { label: "CAG", value: "CAG" },
+    { label: "BUSWAY", value: "BUSWAY" },
     { label: "Outros", value: "Outros" },
   ]);
 

@@ -1,13 +1,12 @@
-// src/_components/ConfirmationModal.tsx
 
 import {
-  ActivityIndicator,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
 import Modal from "react-native-modal";
+import { ActivityIndicator } from "react-native-paper";
 import { useThemeColors } from "../hook/useThemeColors";
 
 interface ConfirmationModalProps {

@@ -8,7 +8,9 @@ export async function uploadImageToSupabase(
 ): Promise<string> {
   const bucketName = "leitura-fotos";
   const folderName = medidorId;
-  const fileName = `${nomeLoja}/${folderName}/${Date.now()}.jpg`;
+  const nameLoja = nomeLoja
+  const safeStoreName = nameLoja.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-zA-Z0-9]/g, "-");
+  const fileName = `${safeStoreName}/${folderName}/${Date.now()}.jpg`;
 
   try {
     // Lê o arquivo como base64

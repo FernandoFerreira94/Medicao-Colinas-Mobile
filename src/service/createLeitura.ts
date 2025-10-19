@@ -2,7 +2,7 @@ import { supabase } from "../lib/supabase";
 import type { LeituraProps } from "../types";
 import { uploadImageToSupabase } from "./StorageService";
 
-interface LeituraComUriProps extends LeituraProps {
+export interface LeituraComUriProps extends LeituraProps {
   photo_uri: string;
 }
 
