@@ -189,7 +189,12 @@ export default function DetailLoja() {
                   Detalhe da leitura
                 </Text>
                 <TextInput
-                  style={styles.textInputBase}
+                  style={[
+                    styles.textInputBase,
+                    {
+                      backgroundColor: color.white,
+                    },
+                  ]}
                   placeholder="Digite algum detalhe"
                   value={detalheLeitura}
                   onChangeText={setDetalheLeitura}
@@ -213,10 +218,7 @@ export default function DetailLoja() {
                   disabled={!isHave}
                 >
                   <Text
-                    style={[
-                      styles.registerButtonText,
-                      { color: color.gray50 },
-                    ]}
+                    style={[styles.registerButtonText, { color: color.gray50 }]}
                   >
                     {isPending ? (
                       <ActivityIndicator size={"small"} color={color.gray50} />

@@ -5,9 +5,6 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/Logo.png",
-
-    "scheme": "medicao-colinas",
-
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -37,7 +34,7 @@
         "expo-splash-screen",
         {
           "image": "./assets/images/Logo.png",
-
+          "height": 300,
           "imageWidth": 300,
           "resizeMode": "contain",
           "backgroundColor": "#3D3C6C",
