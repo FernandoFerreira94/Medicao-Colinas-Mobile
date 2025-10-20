@@ -13,11 +13,11 @@ import {
 } from "react-native";
 import { TextInput as Input } from "react-native-paper";
 import { useToast } from "react-native-toast-notifications";
+import Logo from "../../assets/images/Logo.png";
 import InputPapel from "../_components/InputMatricula";
 import { useAppContext } from "../context/useAppContext";
 import { useSignIn } from "../hook/useSignIn";
 import { useThemeColors } from "../hook/useThemeColors";
-import Logo from "../image/Logo.png";
 
 export default function Login() {
   const { setUser, setSession } = useAppContext();
@@ -183,5 +183,4 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 10,
   },
-
 });

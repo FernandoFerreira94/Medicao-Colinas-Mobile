@@ -5,11 +5,13 @@ import { useEffect } from "react";
 import { ToastProvider } from "react-native-toast-notifications";
 import { AppProvider } from "../context/AppProvider";
 import { useAppContext } from "../context/useAppContext";
+import useAgendarNotificacao from "../hook/useAgendarNotificacao";
 import { supabase } from "../lib/supabase";
 
 const queryClient = new QueryClient();
 
 export default function RootLayout() {
+  useAgendarNotificacao();
   return (
     <QueryClientProvider client={queryClient}>
       <AppProvider>
@@ -21,7 +23,7 @@ export default function RootLayout() {
 }
 
 function MainLayout() {
-  const { user, setUser } = useAppContext();
+  const { setUser } = useAppContext();
 
   useEffect(() => {
     async function loadSession() {
@@ -84,12 +86,11 @@ function MainLayout() {
           name="page/perfil/page"
           options={{ headerShown: false }}
         />
-   
+
         <Stack.Screen
           name="page/detailLoja/[id]"
           options={{ headerShown: false }}
         />
-
       </Stack>
     </ToastProvider>
   );

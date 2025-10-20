@@ -4,7 +4,7 @@ import { Title } from "@/src/_components/title";
 
 import { useAppContext } from "@/src/context/useAppContext";
 import { useState } from "react";
-import { StyleSheet, Switch, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Switch, Text, View } from "react-native";
 import { useThemeColors } from "../../../hook/useThemeColors";
 export default function Perfil() {
   const color = useThemeColors();
@@ -26,31 +26,40 @@ export default function Perfil() {
       <Title text={"Perfil"} />
 
       <View style={[styles.content, { backgroundColor: color.roxoLight }]}>
-        <InfoItem label="Nome completo" value={user?.nome_completo} />
-        <InfoItem label="Função" value={user?.funcao} />
-        <InfoItem label="Número matrícula" value={user?.matricula} />
-        <InfoItem label="CPF" value={user?.cpf} />
+        <ScrollView
+          style={{ flex: 1 }}
+          contentContainerStyle={{ marginBottom: 30 }}
+        >
+          <InfoItem label="Nome completo" value={user?.nome_completo} />
+          <InfoItem label="Função" value={user?.funcao} />
+          <InfoItem label="Número matrícula" value={user?.matricula} />
+          <InfoItem label="CPF" value={user?.cpf} />
 
-        <View style={{ gap: 8 }}>
-          <Text style={[styles.label, { color: color.gray900 }]}>
-            Medição permitida
-          </Text>
+          <View style={{ gap: 8 }}>
+            <Text style={[styles.label, { color: color.gray900 }]}>
+              Medição permitida
+            </Text>
 
-          <View style={[styles.switchGroup, { backgroundColor: color.white }]}>
-            <SwitchItem label="Energia" value={medicaoEnergia} />
-            <SwitchItem label="Água" value={medicaoAgua} />
-            <SwitchItem label="Gás" value={medicaoGas} />
+            <View
+              style={[styles.switchGroup, { backgroundColor: color.white }]}
+            >
+              <SwitchItem label="Energia" value={medicaoEnergia} />
+              <SwitchItem label="Água" value={medicaoAgua} />
+              <SwitchItem label="Gás" value={medicaoGas} />
+            </View>
           </View>
-        </View>
-        <View style={{ gap: 8 }}>
-          <Text style={[styles.label, { color: color.gray900 }]}>
-            Usuario administrador
-          </Text>
+          <View style={{ gap: 8 }}>
+            <Text style={[styles.label, { color: color.gray900 }]}>
+              Usuario administrador
+            </Text>
 
-          <View style={[styles.switchGroup, { backgroundColor: color.white }]}>
-            <SwitchItem label="Admin" value={isAdmin} />
+            <View
+              style={[styles.switchGroup, { backgroundColor: color.white }]}
+            >
+              <SwitchItem label="Admin" value={isAdmin} />
+            </View>
           </View>
-        </View>
+        </ScrollView>
       </View>
     </View>
   );

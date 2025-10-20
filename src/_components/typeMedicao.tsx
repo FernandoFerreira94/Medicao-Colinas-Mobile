@@ -4,13 +4,15 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { useAppContext } from "../context/useAppContext";
 
 export function TypeMEdicao() {
-  const { typeMedicao, setTypeMedicao } = useAppContext();
+  const { typeMedicao, setTypeMedicao, user } = useAppContext();
   const [open, setOpen] = useState(false);
-  const [items, setItems] = useState([
-    { label: "Energia", value: "Energia" },
-    { label: "Água", value: "Agua" },
-    { label: "Gás", value: "Gas" },
-  ]);
+  const [items, setItems] = useState(
+    [
+      user?.permissao_energia ? { label: "Energia", value: "Energia" } : null,
+      user?.permissao_agua ? { label: "Água", value: "Agua" } : null,
+      user?.permissao_gas ? { label: "Gás", value: "Gas" } : null,
+    ].filter(Boolean) as { label: string; value: string }[]
+  );
 
   return (
     <View style={styles.container}>

@@ -5,7 +5,11 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/Logo.png",
+<<<<<<< Updated upstream
     "scheme": "medicao-colinas",
+=======
+    "backgroundColor": "#3D3C6C",
+>>>>>>> Stashed changes
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -13,10 +17,19 @@
     },
     "android": {
       "adaptiveIcon": {
+<<<<<<< Updated upstream
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
+=======
+        "backgroundColor": "#3D3C6C",
+        "foregroundImage": "./assets/images/Logo.png"
+      },
+      "notification": {
+        "icon": "./assets/images/iconRoxo.png",
+        "color": "#FFF"
+>>>>>>> Stashed changes
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
@@ -29,16 +42,23 @@
   "image": "./assets/images/Logo.png",
 "resizeMode": "contain"},
     "plugins": [
-      "expo-router",
       [
         "expo-splash-screen",
         {
           "image": "./assets/images/Logo.png",
+<<<<<<< Updated upstream
           "imageWidth": 300,
           "resizeMode": "contain",
           "backgroundColor": "#3D3C6C",
           "dark": {
             "backgroundColor": "#3D3C6C"
+=======
+          "resizeMode": "cover",
+          "backgroundColor": "#3D3C6C",
+          "dark": {
+            "backgroundColor": "#3D3C6C",
+            "image": "./assets/images/Logo.png"
+>>>>>>> Stashed changes
           }
         }
       ]
