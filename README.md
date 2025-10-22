@@ -1,51 +1,46 @@
-# Welcome to your Expo app 👋
+# ⚡ MEDIÇÃO COLINAS
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**MEDIÇÃO COLINAS** é um aplicativo móvel desenvolvido em **React Native com Expo**, projetado para realizar a coleta das medições de **energia, água e gás** diretamente nas lojas e unidades do complexo Colinas.
 
-## Get started
+O app faz parte do ecossistema integrado com o sistema web **GESTÃO COLINAS**, que realiza o controle administrativo e analítico dos dados coletados.
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+## 🚀 Tecnologias Principais
 
-2. Start the app
+- **React Native** — Framework para desenvolvimento mobile multiplataforma.  
+- **Expo** — Ambiente otimizado para desenvolvimento e deploy.  
+- **Supabase** — Backend completo (autenticação, banco de dados e storage).  
+- **TypeScript** — Tipagem estática para maior segurança.  
 
-   ```bash
-   npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
+## ⚙️ Funcionalidades Principais
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- 🔐 **Login e autenticação** via Supabase.  
+- 🧭 **Coleta de medições** de energia, água e gás por loja e tipo de relógio.  
+- 🖼️ **Upload de fotos** das medições diretamente para o Supabase Storage.  
+- 📅 **Validação automática** dos valores, garantindo que cada nova leitura seja superior à do mês anterior.  
+- 🛰️ **Sincronização direta** com o sistema web **GESTÃO COLINAS**.  
+- 📍 **Identificação da localidade** da medição.  
+- 🚫 **Sem permissões de edição** — o app é destinado exclusivamente à coleta, mantendo a integridade dos dados.  
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## 🔗 Integração com Sistema Web
 
-When you're ready, run:
+O **MEDIÇÃO COLINAS** atua em conjunto com o sistema **GESTÃO COLINAS**, enviando as medições coletadas para a base central (Supabase).  
+Esses dados são processados e exibidos no painel administrativo, permitindo análises, relatórios e visualização gráfica do consumo por loja e por período.
 
-```bash
-npm run reset-project
-```
+---
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 🧩 Objetivo
 
-## Learn more
+Facilitar e agilizar o processo de coleta de medições no complexo Colinas, garantindo precisão nos dados e integração em tempo real com o sistema administrativo.
 
-To learn more about developing your project with Expo, look at the following resources:
+---
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 🏢 Projeto Relacionado
 
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
-# Medicao-Colinas-Mobile
+🔗 [GESTÃO COLINAS (Web)](https://github.com/FernandoFerreira94/Gestao-Colinas)  
+Aplicação Next.js voltada à administração, relatórios e controle de permissões do sistema.
