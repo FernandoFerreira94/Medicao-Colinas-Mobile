@@ -5,6 +5,7 @@ import { ConfirmationModal } from "@/src/_components/ConfirmationModal";
 import { ImageZoomModal } from "@/src/_components/ImagemZoomModal";
 import { SideBar } from "@/src/_components/sideBar";
 import { Title } from "@/src/_components/title";
+import { useAppContext } from "@/src/context/useAppContext";
 import { useImagePickerValidation } from "@/src/hook/useImagePickerValidation";
 import { useLeituraForm } from "@/src/hook/useLeituraForm";
 import { useThemeColors } from "@/src/hook/useThemeColors";
@@ -23,8 +24,11 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { ActivityIndicator } from "react-native-paper";
 import { InfoItem } from "../perfil/page";
+const date = new Date();
+const day = date.getDate();
 
 export default function DetailLoja() {
+  const { user } = useAppContext();
   const color = useThemeColors();
   const params = useLocalSearchParams();
   const lojaId = typeof params.id === "string" ? params.id : undefined;
@@ -61,6 +65,32 @@ export default function DetailLoja() {
   const isImageDisabled = verifyPhoto() || !isHave; // Desabilita se já houver foto ou se a leitura estiver salva
   const currentImageUri =
     photoUri || lojaData?.medidor?.leituras[0]?.foto_url || null;
+
+  const verifi = () => {
+    if (lojaData?.medidor.leituras[0]?.leitura_atual) {
+      return true;
+    }
+    return false;
+  };
+
+  const isVerificad = verifi();
+
+  const shouldDisableButton2 = () => {
+    if (user?.is_adm) {
+      return false;
+    }
+    const isShouldDisable = day > 10;
+    return isShouldDisable;
+  };
+  const shouldDisable = shouldDisableButton2();
+
+  const textoMedicao = isVerificad
+    ? "Medição coletada"
+    : shouldDisable
+      ? "Medição não está liberada"
+      : "Medição";
+
+  const btnDisable = isVerificad ? false : shouldDisable ? true : false;
 
   return (
     <View style={{ flex: 1, backgroundColor: color.roxo }}>
@@ -209,24 +239,19 @@ export default function DetailLoja() {
                   style={[
                     styles.registerButton,
                     {
-                      backgroundColor: isHave
-                        ? color.roxo
-                        : color.roxoPlaceholder,
+                      backgroundColor:
+                        isVerificad || shouldDisable
+                          ? color.roxoPlaceholder
+                          : color.roxo,
                     },
                   ]}
                   onPress={openModalWithValidation}
-                  disabled={!isHave}
+                  disabled={btnDisable}
                 >
                   <Text
                     style={[styles.registerButtonText, { color: color.gray50 }]}
                   >
-                    {isPending ? (
-                      <ActivityIndicator size={"small"} color={color.gray50} />
-                    ) : isHave ? (
-                      "Registrar Leitura"
-                    ) : (
-                      "Leitura registrada"
-                    )}
+                    {textoMedicao}
                   </Text>
                 </TouchableOpacity>
               </View>

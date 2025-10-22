@@ -17,6 +17,26 @@ export default function useAgendarNotificacao() {
     async function configurarNotificacoes() {
       if (!Device.isDevice) return;
 
+      if (Device.osName === "Android") {
+        await Notifications.setNotificationChannelAsync("default", {
+          name: "Notificações Padrão",
+          importance: Notifications.AndroidImportance.HIGH, // 🔊 nível alto
+          sound: "default", // ✅ usa o som padrão do sistema
+          vibrationPattern: [0, 250, 250, 250],
+          lightColor: "#FF231F7C",
+        });
+      }
+
+      await Notifications.requestPermissionsAsync({
+        ios: { allowSound: true, allowAlert: true, allowBadge: true },
+      });
+
+      await Notifications.setNotificationChannelAsync("default", {
+        name: "Notificações Padrão",
+        importance: Notifications.AndroidImportance.HIGH,
+        sound: "default",
+      });
+
       const { status: existingStatus } =
         await Notifications.getPermissionsAsync();
       let finalStatus = existingStatus;
@@ -34,9 +54,9 @@ export default function useAgendarNotificacao() {
       const hoje = new Date();
       const proximoDia27 = new Date(
         hoje.getFullYear(),
-        hoje.getDate() > 27 ? hoje.getMonth() + 1 : hoje.getMonth(),
-        27,
-        9,
+        hoje.getDate() > 25 ? hoje.getMonth() + 1 : hoje.getMonth(),
+        1,
+        7,
         0,
         0
       );
@@ -47,7 +67,10 @@ export default function useAgendarNotificacao() {
           body: "Bom dia. Já está liberado a coleta de medição de Energia, Agua e Gás. ",
           sound: true,
         },
-        trigger: { type: "date", date: proximoDia27 },
+        trigger: {
+          date: proximoDia27,
+          channelId: "default", // Usaremos a sintaxe limpa
+        } as Notifications.NotificationTriggerInput, //
       });
 
       console.log("Notificação agendada para:", proximoDia27);
@@ -60,8 +83,8 @@ export default function useAgendarNotificacao() {
       async () => {
         const proximoMes = new Date();
         proximoMes.setMonth(proximoMes.getMonth() + 1);
-        proximoMes.setDate(27);
-        proximoMes.setHours(9, 0, 0);
+        proximoMes.setDate(1);
+        proximoMes.setHours(4, 0, 0);
 
         await Notifications.scheduleNotificationAsync({
           content: {
@@ -69,7 +92,10 @@ export default function useAgendarNotificacao() {
             body: "Bom dia. Já está liberado a coleta de medição de Energia, Agua e Gás. ",
             sound: true,
           },
-          trigger: { type: "date", date: proximoMes },
+          trigger: {
+            date: proximoMes,
+            channelId: "default", // Usaremos a sintaxe limpa
+          } as Notifications.NotificationTriggerInput, //
         });
 
         console.log("Próxima notificação agendada para:", proximoMes);

@@ -5,13 +5,12 @@ import { useAppContext } from "../context/useAppContext";
 import { useThemeColors } from "../hook/useThemeColors";
 import { LojaProps } from "../types";
 
-
-const date = new Date()
-const day = date.getDate()
+const date = new Date();
+const day = date.getDate();
 
 export default function Card({ loja }: { loja: LojaProps }) {
   const color = useThemeColors();
-  const {user} = useAppContext()
+  const { user } = useAppContext();
   const isToDetailLoja = (idLoja: string, idMedidor: string) => {
     if (idLoja && idMedidor) {
       router.push({
@@ -20,7 +19,7 @@ export default function Card({ loja }: { loja: LojaProps }) {
       });
     }
   };
-  
+
   const verifi = () => {
     if (loja?.medidores[0]?.leituras[0]?.leitura_atual) {
       return true;
@@ -30,34 +29,28 @@ export default function Card({ loja }: { loja: LojaProps }) {
 
   const isVerificad = verifi();
 
-   const shouldDisableButton2 = () => {
+  const shouldDisableButton2 = () => {
     if (user?.is_adm) {
       return false;
     }
-    const isShouldDisable =  day < 27;
+    const isShouldDisable = day > 10;
     return isShouldDisable;
   };
   const shouldDisable = shouldDisableButton2();
 
-const textoMedicao = isVerificad
-  ? "Medição coletada"
-  : shouldDisable 
-    ? `Medição liberada apos dia 27, hoje: ${day}` 
-    : "Medição"; 
+  const textoMedicao = isVerificad
+    ? "Medição coletada"
+    : shouldDisable
+      ? `Medição liberada no primeiro dia do mês, hoje: ${day}`
+      : "Medição";
 
-const btnDisable = isVerificad
-  ? false
-  : shouldDisable 
-    ? true 
-    : false; 
+  const btnDisable = isVerificad ? false : shouldDisable ? true : false;
 
   return (
     <View
       style={[
         styles.card,
-        isVerificad
-          ? { borderColor: color.green }
-          : { borderColor: color.red },
+        isVerificad ? { borderColor: color.green } : { borderColor: color.red },
         { backgroundColor: color.white },
       ]}
     >
@@ -120,15 +113,18 @@ const btnDisable = isVerificad
         <TouchableOpacity
           style={[
             styles.btnCardDefault,
-         { backgroundColor : isVerificad || shouldDisable ? color.roxoPlaceholder
-              : color.roxo,}
+            {
+              backgroundColor:
+                isVerificad || shouldDisable
+                  ? color.roxoPlaceholder
+                  : color.roxo,
+            },
           ]}
           onPress={() => {
             if (loja?.id && loja?.medidores[0].id) {
               isToDetailLoja(loja?.id, loja?.medidores[0]?.id);
             }
           }}
-            disabled={btnDisable}
         >
           <Text
             style={[
@@ -138,7 +134,9 @@ const btnDisable = isVerificad
                 color: color.gray50,
               },
             ]}
-          >{textoMedicao}          </Text>
+          >
+            {textoMedicao}{" "}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
