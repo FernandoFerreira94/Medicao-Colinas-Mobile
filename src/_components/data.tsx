@@ -70,6 +70,7 @@ export function MonthYearDropdown() {
                 style={styles.picker}
                 onValueChange={(itemValue) => setMonth(itemValue)}
                 itemStyle={{ color: color.gray900 }}
+                
               >
                 {months.map((m, i) => {
                   const isFuture =

@@ -6,11 +6,13 @@ import { useThemeColors } from "../hook/useThemeColors";
 import { LojaProps } from "../types";
 
 const date = new Date();
-const day = date.getDate();
+const currentDay = date.getDate();
+const currentMonth = date.getMonth() + 1;
+const currentYear = date.getFullYear();
 
 export default function Card({ loja }: { loja: LojaProps }) {
   const color = useThemeColors();
-  const { user } = useAppContext();
+  const { user, month, year } = useAppContext();
   const isToDetailLoja = (idLoja: string, idMedidor: string) => {
     if (idLoja && idMedidor) {
       router.push({
@@ -33,16 +35,27 @@ export default function Card({ loja }: { loja: LojaProps }) {
     if (user?.is_adm) {
       return false;
     }
-    const isShouldDisable = day > 10;
+    const isShouldDisable = 1 > 10;
     return isShouldDisable;
   };
   const shouldDisable = shouldDisableButton2();
+
+  const verifiedMonth = () => {
+    if (currentMonth === month && currentYear === year && 1 < 10) {
+      return true;
+    }
+    return false;
+  };
+
+  const isVerificadMonth = verifiedMonth();
 
   const textoMedicao = isVerificad
     ? "Medição coletada"
     : shouldDisable
       ? `Medição liberada no primeiro dia do mês!`
-      : "Medição";
+      : isVerificadMonth
+        ? "Mês não liberado"
+        : `Medição!`;
 
   return (
     <View
@@ -113,7 +126,7 @@ export default function Card({ loja }: { loja: LojaProps }) {
             styles.btnCardDefault,
             {
               backgroundColor:
-                isVerificad || shouldDisable
+                isVerificad || shouldDisable || isVerificadMonth
                   ? color.roxoPlaceholder
                   : color.roxo,
             },

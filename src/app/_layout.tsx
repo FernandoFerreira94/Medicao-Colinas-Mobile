@@ -2,11 +2,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { router, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
+import { LogBox } from "react-native";
 import { ToastProvider } from "react-native-toast-notifications";
 import { AppProvider } from "../context/AppProvider";
 import { useAppContext } from "../context/useAppContext";
 import useAgendarNotificacao from "../hook/useAgendarNotificacao";
 import { supabase } from "../lib/supabase";
+LogBox.ignoreLogs(["SafeAreaView has been deprecated"]);
 
 const queryClient = new QueryClient();
 

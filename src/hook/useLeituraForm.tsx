@@ -48,8 +48,8 @@ export function useLeituraForm({ lojaId, medidorId }: LeituraFormProps) {
   const consumoCalculado = isBusway
     ? leituraAtualNum
     : leituraAtualNum > leituraAnterior
-    ? leituraAtualNum - leituraAnterior
-    : 0;
+      ? leituraAtualNum - leituraAnterior
+      : 0;
 
   const isLeituraValida = isBusway
     ? leituraAtualNum >= 0
@@ -133,7 +133,6 @@ export function useLeituraForm({ lojaId, medidorId }: LeituraFormProps) {
     setIsModalVisible(true);
   };
 
-  // Função de Registro
   const handleRegistrarLeitura = (photoUri: string | null) => {
     if (!lojaData?.medidor || !photoUri) return;
 
@@ -159,7 +158,7 @@ export function useLeituraForm({ lojaId, medidorId }: LeituraFormProps) {
       nome_loja_leitura: lojaData?.loja?.nome_loja || "",
     };
 
-    mutate(newLeitura as any);
+    mutate(newLeitura);
   };
 
   const verifyPhoto = () => !!lojaData?.medidor?.leituras[0]?.foto_url;

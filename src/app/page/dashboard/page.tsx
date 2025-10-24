@@ -30,7 +30,7 @@ export default function Dashboard() {
     typeMedicao,
   } = useAppContext();
 
-  const { data, isLoading } = useFetchAllLojas(
+  const { data, isLoading, isError } = useFetchAllLojas(
     typeMedicao,
     month,
     year,
@@ -238,19 +238,33 @@ export default function Dashboard() {
                 </>
               ) : (
                 <View
-                  style={{ justifyContent: "center", alignItems: "center" }}
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 100,
+                    width: "100%",
+                    gap: 12,
+                  }}
                 >
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      fontWeight: "semibold",
-                      marginTop: 20,
-                    }}
-                  >
-                    Nenhuma loja encontrada
+                  <ActivityIndicator size="large" color={color.roxo} />
+                  <Text style={{ fontSize: 16, fontWeight: "semibold" }}>
+                    Carregando lojas...
                   </Text>
                 </View>
               ))}
+            {isError && (
+              <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: "semibold",
+                    marginTop: 20,
+                  }}
+                >
+                  Nenhuma loja encontrada
+                </Text>
+              </View>
+            )}
           </ScrollView>
         </View>
       </View>
