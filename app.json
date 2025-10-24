@@ -1,9 +1,9 @@
 {
   "expo": {
     "name": "Medição Colinas",
-    "scheme": "Medição Colinas",
-    "slug": "Medição Colinas",
-    "version": "1.0.0",
+    "scheme": "medicao-colinas",
+    "slug": "medicao-colinas",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
@@ -15,8 +15,10 @@
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/icon.png",
+
         "backgroundImage": "./assets/images/icon.png",
-        "monochromeImage": "./assets/images/icon.png"
+        "monochromeImage": "./assets/images/icon.png",
+        "versionCode": 2
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
@@ -29,7 +31,7 @@
     "splash": {
       "backgroundColor": "#3D3C6C",
       "image": "./assets/images/LogoWhite.png",
-      "resizeMode": "cover",
+      "resizeMode": "contain",
       "imageWidth": 300,
       "height": 300
     },
@@ -40,7 +42,7 @@
           "image": "./assets/images/LogoWhite.png",
           "height": 300,
           "imageWidth": 300,
-          "resizeMode": "cover",
+          "resizeMode": "contain",
           "backgroundColor": "#3D3C6C",
           "dark": {
             "backgroundColor": "#3D3C6C"
