@@ -35,13 +35,13 @@ export default function Card({ loja }: { loja: LojaProps }) {
     if (user?.is_adm) {
       return false;
     }
-    const isShouldDisable = 1 > 10;
+    const isShouldDisable = currentDay > 10;
     return isShouldDisable;
   };
   const shouldDisable = shouldDisableButton2();
 
   const verifiedMonth = () => {
-    if (currentMonth === month && currentYear === year && 1 < 10) {
+    if (currentMonth === month && currentYear === year && currentDay < 10) {
       return true;
     }
     return false;
@@ -55,7 +55,7 @@ export default function Card({ loja }: { loja: LojaProps }) {
       ? `Medição liberada no primeiro dia do mês!`
       : isVerificadMonth
         ? "Mês não liberado"
-        : `Medição!`;
+        : `Medição`;
 
   return (
     <View

@@ -25,10 +25,12 @@ import { ActivityIndicator } from "react-native-paper";
 import { InfoItem } from "../perfil/page";
 
 const date = new Date();
-const day = date.getDate();
+const currentDay = date.getDate();
+const currentMonth = date.getMonth() + 1;
+const currentYear = date.getFullYear();
 
 export default function DetailLoja() {
-  const { user } = useAppContext();
+  const { user, month, year } = useAppContext();
   const color = useThemeColors();
   const params = useLocalSearchParams();
   const lojaId = typeof params.id === "string" ? params.id : undefined;
@@ -68,17 +70,28 @@ export default function DetailLoja() {
 
   const shouldDisableButton2 = () => {
     if (user?.is_adm) return false;
-    return day > 10;
+    return currentDay > 10;
   };
   const shouldDisable = shouldDisableButton2();
+
+  const btnDisable = isVerificad ? false : shouldDisable ? true : false;
+
+  const verifiedMonth = () => {
+    if (currentMonth === month && currentYear === year && currentDay < 10) {
+      return true;
+    }
+    return false;
+  };
+
+  const isVerificadMonth = verifiedMonth();
 
   const textoMedicao = isVerificad
     ? "Medição coletada"
     : shouldDisable
       ? "Medição não está liberada"
-      : "Medição";
-
-  const btnDisable = isVerificad ? false : shouldDisable ? true : false;
+      : isVerificadMonth
+        ? "Medição coletada"
+        : "Nenhuma medição coletada";
 
   return (
     <View style={{ flex: 1, backgroundColor: color.roxo }}>
@@ -236,7 +249,7 @@ export default function DetailLoja() {
                   },
                 ]}
                 onPress={openModalWithValidation}
-                disabled={btnDisable}
+                disabled={btnDisable || isVerificadMonth}
               >
                 <Text
                   style={[styles.registerButtonText, { color: color.gray50 }]}
