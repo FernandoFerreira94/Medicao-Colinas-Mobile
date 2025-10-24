@@ -71,9 +71,16 @@ export function MonthYearDropdown() {
                 onValueChange={(itemValue) => setMonth(itemValue)}
                 itemStyle={{ color: color.gray900 }}
               >
-                {months.map((m, i) => (
-                  <Picker.Item key={i} label={m} value={i + 1} />
-                ))}
+                {months.map((m, i) => {
+                  const isFuture =
+                    year > currentYear ||
+                    (year === currentYear && i + 1 > new Date().getMonth() + 1);
+
+                  // Se for um mês futuro, não renderiza
+                  if (isFuture) return null;
+
+                  return <Picker.Item key={i} label={m} value={i + 1} />;
+                })}
               </Picker>
 
               <Picker

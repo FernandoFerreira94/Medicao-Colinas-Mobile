@@ -41,10 +41,8 @@ export default function Card({ loja }: { loja: LojaProps }) {
   const textoMedicao = isVerificad
     ? "Medição coletada"
     : shouldDisable
-      ? `Medição liberada no primeiro dia do mês, hoje: ${day}`
+      ? `Medição liberada no primeiro dia do mês!`
       : "Medição";
-
-  const btnDisable = isVerificad ? false : shouldDisable ? true : false;
 
   return (
     <View
@@ -189,5 +187,6 @@ const styles = StyleSheet.create({
   btnTextSecondary: {
     fontWeight: "600",
     fontSize: 13,
+    textAlign: "center",
   },
 });

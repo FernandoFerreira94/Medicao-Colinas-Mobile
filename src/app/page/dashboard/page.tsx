@@ -20,14 +20,13 @@ import { ActivityIndicator } from "react-native-paper";
 const ITEMS_PER_PAGE = 20;
 
 export default function Dashboard() {
-
   const color = useThemeColors();
   const {
     searchTerm,
     month,
     year,
     localidade,
-    
+
     typeMedicao,
   } = useAppContext();
 
@@ -127,9 +126,8 @@ export default function Dashboard() {
     setVisibleCount((prevCount) => prevCount + ITEMS_PER_PAGE);
   };
 
-
   return (
-    <View style={{ flex: 1, backgroundColor: color.roxo }}>
+    <View style={{ flex: 1, height: "100%", backgroundColor: color.roxo }}>
       <SideBar />
       <View style={styles.containerSearch}>
         <View style={{ width: "100%", alignItems: "flex-end" }}>
@@ -165,7 +163,6 @@ export default function Dashboard() {
         }}
       >
         <View style={[styles.content, { backgroundColor: color.roxoLight }]}>
-         
           <ScrollView style={{ width: "100%" }}>
             {isLoading && (
               <View
@@ -174,42 +171,45 @@ export default function Dashboard() {
                   alignItems: "center",
                   height: 100,
                   width: "100%",
-                  gap:12
+                  gap: 12,
                 }}
               >
                 <ActivityIndicator size="large" color={color.roxo} />
-                <Text style={{fontSize: 16, fontWeight: "semibold"}}>Carregando lojas...</Text>
+                <Text style={{ fontSize: 16, fontWeight: "semibold" }}>
+                  Carregando lojas...
+                </Text>
               </View>
             )}
             {data &&
               (sortedLojas && sortedLojas.length > 0 ? (
-                <><View
-            style={{
-              flexDirection: "row",
-              gap: 10,
-              justifyContent: "center",
-              paddingBottom: 8,
-            }}
-          >
-            <Text
-              style={{
-                color: color.green,
-                fontWeight: "semibold",
-                fontSize: 14,
-              }}
-            >
-              Ativos ( {activeLeituras} / {activeCount} )
-            </Text>
-            <Text
-              style={{
-                color: color.red,
-                fontWeight: "semibold",
-                fontSize: 14,
-              }}
-            >
-              Vagos ( {vacanLeitura} / {vacantCount} )
-            </Text>
-          </View>
+                <>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 10,
+                      justifyContent: "center",
+                      paddingBottom: 8,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: color.green,
+                        fontWeight: "semibold",
+                        fontSize: 14,
+                      }}
+                    >
+                      Ativos ( {activeLeituras} / {activeCount} )
+                    </Text>
+                    <Text
+                      style={{
+                        color: color.red,
+                        fontWeight: "semibold",
+                        fontSize: 14,
+                      }}
+                    >
+                      Vagos ( {vacanLeitura} / {vacantCount} )
+                    </Text>
+                  </View>
                   {sortedLojas.slice(0, visibleCount).map((loja) => {
                     if (!loja.id) {
                       console.error(

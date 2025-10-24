@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     width: width,
-    height: height,
+    height: "100%",
     backgroundColor: "rgba(0,0,0,0.4)", // sombra para o resto do dashboard
     zIndex: 10,
   },
@@ -161,7 +161,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     width: width / 2,
-    height: height,
+    height: "100%",
+    flex: 1,
   },
   menuHeader: {
     width: "100%",
@@ -193,5 +194,4 @@ const styles = StyleSheet.create({
   menuText: {
     fontSize: 16,
   },
-
 });

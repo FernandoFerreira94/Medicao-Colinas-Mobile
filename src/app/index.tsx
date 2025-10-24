@@ -24,8 +24,8 @@ export default function Login() {
   const color = useThemeColors();
 
   const toast = useToast();
-  const [matricula, setMatricula] = useState("colinas");
-  const [password, setPassword] = useState("colinasshopping");
+  const [matricula, setMatricula] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const { mutate, isPending } = useSignIn({

@@ -12,7 +12,7 @@ export function Title({ text }: { text: string }) {
 
 const styles = StyleSheet.create({
   headerText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
   },
   header: {

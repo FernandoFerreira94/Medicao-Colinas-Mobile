@@ -1,4 +1,4 @@
-// app/page/detailLoja/[id].tsx (Código final limpo ajustado)
+// app/page/detailLoja/[id].tsx
 
 import { ArrowBack } from "@/src/_components/arrowBack";
 import { ConfirmationModal } from "@/src/_components/ConfirmationModal";
@@ -14,7 +14,6 @@ import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import {
   Image,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -24,6 +23,7 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { ActivityIndicator } from "react-native-paper";
 import { InfoItem } from "../perfil/page";
+
 const date = new Date();
 const day = date.getDate();
 
@@ -35,7 +35,7 @@ export default function DetailLoja() {
   const medidorId =
     typeof params.idMedidor === "string" ? params.idMedidor : undefined;
 
-  // 🎯 1. Uso do Hook de Lógica Central
+  // 🎯 1. Hook central da leitura
   const {
     lojaData,
     leituraAnterior,
@@ -55,32 +55,20 @@ export default function DetailLoja() {
   } = useLeituraForm({ lojaId, medidorId });
 
   const [isModalImg, setIsModalImg] = useState(false);
-
-  // 🎯 2. Uso do Hook de Imagem
   const { photoUri, handleImagePick } = useImagePickerValidation();
 
-  // 3. Funções de Ação (Adaptadas para os hooks)
   const openModalWithValidation = () => handleOpenModal(photoUri);
   const registerLeitura = () => handleRegistrarLeitura(photoUri);
-  const isImageDisabled = verifyPhoto() || !isHave; // Desabilita se já houver foto ou se a leitura estiver salva
+
+  const isImageDisabled = verifyPhoto() || !isHave;
   const currentImageUri =
     photoUri || lojaData?.medidor?.leituras[0]?.foto_url || null;
 
-  const verifi = () => {
-    if (lojaData?.medidor.leituras[0]?.leitura_atual) {
-      return true;
-    }
-    return false;
-  };
-
-  const isVerificad = verifi();
+  const isVerificad = !!lojaData?.medidor.leituras[0]?.leitura_atual;
 
   const shouldDisableButton2 = () => {
-    if (user?.is_adm) {
-      return false;
-    }
-    const isShouldDisable = day > 10;
-    return isShouldDisable;
+    if (user?.is_adm) return false;
+    return day > 10;
   };
   const shouldDisable = shouldDisableButton2();
 
@@ -96,168 +84,168 @@ export default function DetailLoja() {
     <View style={{ flex: 1, backgroundColor: color.roxo }}>
       <SideBar />
       <ArrowBack />
-      <Title text={"Detalhes loja"} />
+      <Title
+        text={`${lojaData?.loja?.nome_loja}  ${lojaData?.loja?.prefixo_loja}-${lojaData?.loja?.numero_loja}`}
+      />
+
       <View style={[styles.content, { backgroundColor: color.roxoLight }]}>
         <KeyboardAwareScrollView
           style={{ flex: 1, width: "100%" }}
           enableOnAndroid={true}
-          extraScrollHeight={60}
+          extraScrollHeight={80}
           keyboardOpeningTime={0}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ flexGrow: 1 }}
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingBottom: 120, // espaço pro teclado
+          }}
         >
-          {/* AQUI ESTÁ A VERIFICAÇÃO PRINCIPAL */}
           {!lojaData ? (
-            // --- ESTADO DE CARREGAMENTO (LOADING) ---
             <View style={styles.loadingContainer}>
               <ActivityIndicator size={"large"} color={color.roxo} />
-              <Text style={{ fontSize: 16, fontWeight: "semibold" }}>
+              <Text style={{ fontSize: 16, fontWeight: "600" }}>
                 Carregando dados da loja...
               </Text>
             </View>
           ) : (
-            // --- CONTEÚDO DA LOJA (APÓS O FETCH) ---
-            <ScrollView style={{ width: "100%", flex: 1 }}>
-              <View style={styles.infoContainer}>
-                {/* As informações da loja agora só são renderizadas quando lojaData não é nulo */}
-                <InfoItem label="Nome loja" value={lojaData.loja.nome_loja} />
-                <InfoItem label="Complexo" value={lojaData.loja.complexo} />
+            <View style={styles.infoContainer}>
+              <InfoItem label="Complexo" value={lojaData.loja.complexo} />
+              <InfoItem
+                label="Tipo medição"
+                value={lojaData.medidor.tipo_medicao}
+              />
+              <InfoItem
+                label="Numero relogio"
+                value={lojaData.medidor.numero_relogio}
+              />
+              <InfoItem
+                label="Localização relogio"
+                value={lojaData.medidor.localidade}
+              />
+              {lojaData.medidor.tipo_medicao === "Energia" && (
                 <InfoItem
-                  label="Tipo medição"
-                  value={lojaData.medidor.tipo_medicao}
+                  label="Localização quadro"
+                  value={lojaData.medidor.quadro_distribuicao || "--- ---"}
                 />
-                <InfoItem
-                  label="Numero relogio"
-                  value={lojaData.medidor.numero_relogio}
-                />
-                <InfoItem
-                  label="Localização relogio"
-                  value={lojaData.medidor.localidade}
-                />
-                {lojaData.medidor.tipo_medicao === "Energia" && (
-                  <InfoItem
-                    label="Localização quadro"
-                    value={lojaData.medidor.quadro_distribuicao || "--- ---"}
-                  />
-                )}
-                <InfoItem
-                  label="Leitura anterior"
-                  value={String(leituraAnterior)}
-                />
+              )}
+              <InfoItem
+                label="Informações medidor"
+                value={lojaData.medidor.detalhes || "--- ---"}
+              />
+              <InfoItem
+                label="Leitura anterior"
+                value={String(leituraAnterior)}
+              />
 
-                {/* --- INPUT DE LEITURA ATUAL --- */}
-                <Text style={[styles.label, { color: color.gray900 }]}>
-                  Leitura atual *
-                </Text>
-                <TextInput
-                  style={[
-                    styles.textInputBase,
-                    {
-                      borderColor: getBorderColor(),
-                      backgroundColor: color.white,
-                    },
-                  ]}
-                  placeholder="Digite a leitura"
-                  placeholderTextColor={color.gray900}
-                  keyboardType="numeric"
-                  value={medicaoAtual}
-                  onChangeText={setMedicaoAtual}
-                  editable={isHave}
+              <Text style={[styles.label, { color: color.gray900 }]}>
+                Leitura atual *
+              </Text>
+              <TextInput
+                style={[
+                  styles.textInputBase,
+                  {
+                    borderColor: getBorderColor(),
+                    backgroundColor: color.white,
+                  },
+                ]}
+                placeholder="Digite a leitura"
+                placeholderTextColor={color.gray900}
+                keyboardType="numeric"
+                value={medicaoAtual}
+                onChangeText={setMedicaoAtual}
+                editable={isHave}
+              />
+
+              <InfoItem label="Consumo" value={String(consumoCalculado)} />
+
+              <Text style={[styles.label, { color: color.gray900 }]}>
+                Foto do Medidor *
+              </Text>
+              <TouchableOpacity
+                style={[
+                  styles.photoButton,
+                  {
+                    borderColor: photoUri ? color.green : color.roxo,
+                    backgroundColor: color.white,
+                  },
+                ]}
+                onPress={() => handleImagePick(!isHave)}
+                disabled={isImageDisabled}
+              >
+                <Ionicons
+                  name={
+                    photoUri || verifyPhoto()
+                      ? "checkmark-circle"
+                      : "camera-outline"
+                  }
+                  size={24}
+                  color={photoUri || verifyPhoto() ? color.green : color.roxo}
                 />
-
-                <InfoItem label="Consumo" value={String(consumoCalculado)} />
-
-                {/* --- INPUT DE FOTO --- */}
-                <Text style={[styles.label, { color: color.gray900 }]}>
-                  Foto do Medidor *
-                </Text>
-                <TouchableOpacity
-                  style={[
-                    styles.photoButton,
-                    {
-                      borderColor: photoUri ? color.green : color.roxo,
-                      backgroundColor: color.white,
-                    },
-                  ]}
-                  onPress={() => handleImagePick(!isHave)}
-                  disabled={isImageDisabled}
+                <Text
+                  style={{
+                    color: color.roxo,
+                    fontWeight: "600",
+                    fontSize: 16,
+                  }}
                 >
-                  <Ionicons
-                    name={
-                      photoUri || verifyPhoto()
-                        ? "checkmark-circle"
-                        : "camera-outline"
-                    }
-                    size={24}
-                    color={photoUri || verifyPhoto() ? color.green : color.roxo}
-                  />
-                  <Text
-                    style={{
-                      color: color.roxo,
-                      fontWeight: "semibold",
-                      fontSize: 16,
-                    }}
-                  >
-                    {photoUri || verifyPhoto()
-                      ? "Foto Anexada"
-                      : "Tirar Foto / Escolher da Galeria"}
-                  </Text>
-                </TouchableOpacity>
-
-                {/* Visualização da foto nova ou já salva */}
-                {currentImageUri && (
-                  <TouchableOpacity onPress={() => setIsModalImg(true)}>
-                    <Image
-                      source={{ uri: currentImageUri }}
-                      style={styles.imagePreview}
-                    />
-                  </TouchableOpacity>
-                )}
-
-                <Text style={[styles.label, { color: color.gray900 }]}>
-                  Detalhe da leitura
+                  {photoUri || verifyPhoto()
+                    ? "Foto Anexada"
+                    : "Tirar Foto / Escolher da Galeria"}
                 </Text>
-                <TextInput
-                  style={[
-                    styles.textInputBase,
-                    {
-                      backgroundColor: color.white,
-                    },
-                  ]}
-                  placeholder="Digite algum detalhe"
-                  value={detalheLeitura}
-                  onChangeText={setDetalheLeitura}
-                  editable={isHave}
-                  multiline
-                  numberOfLines={8}
-                  placeholderTextColor={color.gray900}
-                />
+              </TouchableOpacity>
 
-                {/* --- BOTÃO DE REGISTRO --- */}
-                <TouchableOpacity
-                  style={[
-                    styles.registerButton,
-                    {
-                      backgroundColor:
-                        isVerificad || shouldDisable
-                          ? color.roxoPlaceholder
-                          : color.roxo,
-                    },
-                  ]}
-                  onPress={openModalWithValidation}
-                  disabled={btnDisable}
-                >
-                  <Text
-                    style={[styles.registerButtonText, { color: color.gray50 }]}
-                  >
-                    {textoMedicao}
-                  </Text>
+              {currentImageUri && (
+                <TouchableOpacity onPress={() => setIsModalImg(true)}>
+                  <Image
+                    source={{ uri: currentImageUri }}
+                    style={styles.imagePreview}
+                  />
                 </TouchableOpacity>
-              </View>
-            </ScrollView>
+              )}
+
+              <Text style={[styles.label, { color: color.gray900 }]}>
+                Detalhe da leitura
+              </Text>
+              <TextInput
+                style={[
+                  styles.textInputBase,
+                  {
+                    backgroundColor: color.white,
+                    minHeight: 120,
+                    textAlignVertical: "top",
+                  },
+                ]}
+                placeholder="Digite algum detalhe"
+                value={detalheLeitura}
+                onChangeText={setDetalheLeitura}
+                editable={isHave}
+                multiline
+                numberOfLines={6}
+                placeholderTextColor={color.gray900}
+              />
+
+              <TouchableOpacity
+                style={[
+                  styles.registerButton,
+                  {
+                    backgroundColor:
+                      isVerificad || shouldDisable
+                        ? color.roxoPlaceholder
+                        : color.roxo,
+                  },
+                ]}
+                onPress={openModalWithValidation}
+                disabled={btnDisable}
+              >
+                <Text
+                  style={[styles.registerButtonText, { color: color.gray50 }]}
+                >
+                  {textoMedicao}
+                </Text>
+              </TouchableOpacity>
+            </View>
           )}
-          {/* FIM DA VERIFICAÇÃO PRINCIPAL */}
         </KeyboardAwareScrollView>
       </View>
 
@@ -342,7 +330,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  // NOVO ESTILO PARA O LOADING
   loadingContainer: {
     width: "100%",
     paddingTop: 40,

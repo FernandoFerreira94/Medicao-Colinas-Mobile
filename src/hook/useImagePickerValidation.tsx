@@ -59,8 +59,7 @@ export function useImagePickerValidation() {
 
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images, // ✅ Uso do enum importado nominalmente
-      allowsEditing: true,
-      aspect: [6,2],
+
       quality: 0.1, // Compressão
     });
 
@@ -81,8 +80,7 @@ export function useImagePickerValidation() {
 
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images, // ✅ Uso do enum importado nominalmente
-      allowsEditing: true,
-      aspect: [6,2],
+
       quality: 0.1, // Compressão
     });
 

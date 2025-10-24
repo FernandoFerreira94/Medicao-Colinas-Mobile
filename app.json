@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "medicao-colinas",
-    "scheme": "medicao-colinas",
-    "slug": "medicao-colinas",
+    "name": "Medição Colinas",
+    "scheme": "Medição Colinas",
+    "slug": "Medição Colinas",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/Logo.png",
+    "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -14,12 +14,13 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
-        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+        "foregroundImage": "./assets/images/icon.png",
+        "backgroundImage": "./assets/images/icon.png",
+        "monochromeImage": "./assets/images/icon.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.fernandoeqp.medicaocolinas"
     },
     "web": {
       "output": "static",
@@ -27,27 +28,35 @@
     },
     "splash": {
       "backgroundColor": "#3D3C6C",
-      "image": "./assets/images/Logo.png",
-      "resizeMode": "contain"
+      "image": "./assets/images/LogoWhite.png",
+      "resizeMode": "cover",
+      "imageWidth": 300,
+      "height": 300
     },
     "plugins": [
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/Logo.png",
+          "image": "./assets/images/LogoWhite.png",
           "height": 300,
           "imageWidth": 300,
-          "resizeMode": "contain",
+          "resizeMode": "cover",
           "backgroundColor": "#3D3C6C",
           "dark": {
             "backgroundColor": "#3D3C6C"
           }
         }
-      ]
+      ],
+      "expo-router"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "284bf32e-9350-47b9-ac61-c9b1edf5e2e2"
+      }
     }
   }
 }

@@ -14,7 +14,7 @@ export function InputSeracrh() {
         style={[styles.input, { color: color.gray900 }]}
         value={searchTerm}
         onChangeText={setSearchTerm}
-        placeholderTextColor={color.gray900}
+        placeholderTextColor={color.grayPlaceholder900}
       />
     </View>
   );

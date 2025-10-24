@@ -28,18 +28,20 @@ export default function Perfil() {
       <View style={[styles.content, { backgroundColor: color.roxoLight }]}>
         <ScrollView
           style={{ flex: 1 }}
-          contentContainerStyle={{ marginBottom: 30 }}
+          contentContainerStyle={{ paddingBottom: 60 }}
+          showsVerticalScrollIndicator={false}
         >
-          <InfoItem label="Nome completo" value={user?.nome_completo} />
-          <InfoItem label="Função" value={user?.funcao} />
-          <InfoItem label="Número matrícula" value={user?.matricula} />
-          <InfoItem label="CPF" value={user?.cpf} />
-
           <View style={{ gap: 8 }}>
-            <Text style={[styles.label, { color: color.gray900 }]}>
-              Medição permitida
-            </Text>
+            <InfoItem label="Nome completo" value={user?.nome_completo} />
+            <InfoItem label="Função" value={user?.funcao} />
+            <InfoItem label="Número matrícula" value={user?.matricula} />
+            <InfoItem label="CPF" value={user?.cpf} />
 
+            <View style={{ gap: 8 }}>
+              <Text style={[styles.label, { color: color.gray900 }]}>
+                Medição permitida
+              </Text>
+            </View>
             <View
               style={[styles.switchGroup, { backgroundColor: color.white }]}
             >
@@ -84,7 +86,7 @@ function SwitchItem({ label, value }: { label: string; value: boolean }) {
         value={value}
         disabled={true}
         trackColor={{ false: color.gray900, true: color.green }}
-        thumbColor={value ? color.roxoLight : color.gray900}
+        thumbColor={value ? color.roxoLight : color.gray50}
       />
     </View>
   );
@@ -92,23 +94,22 @@ function SwitchItem({ label, value }: { label: string; value: boolean }) {
 
 const styles = StyleSheet.create({
   content: {
-    backgroundColor: "#fff",
     width: "100%",
     height: "100%",
+    backgroundColor: "#fff",
+    flex: 1,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    marginTop: 20,
     padding: 20,
-    paddingTop: 50,
-    gap: 10,
+    paddingTop: 20,
   },
+
   label: {
     fontWeight: "bold",
     fontSize: 16,
   },
   contentText: {
     width: "100%",
-
     justifyContent: "center",
     borderRadius: 10,
     paddingHorizontal: 14,
