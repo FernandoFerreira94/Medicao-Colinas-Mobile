@@ -5,7 +5,7 @@
     "slug": "medicao-colinas",
     "version": "1.0.2",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/IconsIwhite.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -31,17 +31,14 @@
     "splash": {
       "backgroundColor": "#3D3C6C",
       "image": "./assets/images/LogoWhite.png",
-      "resizeMode": "contain",
-      "imageWidth": 300,
-      "height": 300
+      "resizeMode": "contain"
     },
     "plugins": [
       [
         "expo-splash-screen",
         {
           "image": "./assets/images/LogoWhite.png",
-          "height": 300,
-          "imageWidth": 300,
+
           "resizeMode": "contain",
           "backgroundColor": "#3D3C6C",
           "dark": {

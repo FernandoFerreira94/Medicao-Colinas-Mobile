@@ -151,7 +151,7 @@ export function useLeituraForm({ lojaId, medidorId }: LeituraFormProps) {
       leitura_anterior: lojaData?.medidor?.ultima_leitura,
       leitura_atual: leituraAtualNum,
       photo_uri: photoUri,
-      consumo_mensal: consumoCalculado,
+
       nome_usuario: `${firstName} - ${user?.funcao}`,
       detalhes_leitura: full_detalhes,
       data_leitura: new Date().toISOString(),

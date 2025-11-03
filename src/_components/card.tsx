@@ -1,12 +1,13 @@
 import { router } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { formatarLeitura } from "../action/FormataLeitura";
 import { truncateText } from "../action/truncateText";
 import { useAppContext } from "../context/useAppContext";
 import { useThemeColors } from "../hook/useThemeColors";
 import { LojaProps } from "../types";
 
 const date = new Date();
-const currentDay = date.getDate();
+const currentDay = 29;
 const currentMonth = date.getMonth() + 1;
 const currentYear = date.getFullYear();
 
@@ -39,24 +40,38 @@ export default function Card({ loja }: { loja: LojaProps }) {
     return isShouldDisable;
   };
   const shouldDisable = shouldDisableButton2();
+  const medidorJaLidoNoMes = loja?.medidores[0]?.leituras.some(
+    (leitura) => leitura.mes === month && leitura.ano === year
+  );
+  const laterMonth = currentMonth - 1;
 
   const verifiedMonth = () => {
-    if (currentMonth === month && currentYear === year && currentDay < 10) {
+    if (medidorJaLidoNoMes) return true;
+    if (currentMonth === month && currentYear === year && currentDay <= 10)
+      return false;
+    if (user?.is_adm) return true;
+
+    if (
+      month === laterMonth &&
+      currentYear === year &&
+      (currentDay <= 10 || currentDay >= 29)
+    )
       return true;
-    }
+
     return false;
   };
 
   const isVerificadMonth = verifiedMonth();
 
-  const textoMedicao = isVerificad
+  const textoMedicao = medidorJaLidoNoMes
     ? "Medição coletada"
-    : shouldDisable
-      ? `Medição liberada no primeiro dia do mês!`
-      : isVerificadMonth
-        ? "Mês não liberado"
-        : `Medição`;
-
+    : currentMonth === month && currentYear === year
+      ? "Medição não liberada"
+      : month === laterMonth && currentYear === year && currentDay <= 10
+        ? "Medição  liberada"
+        : user?.is_adm
+          ? "Medição"
+          : "Medição não liberada";
   return (
     <View
       style={[
@@ -116,7 +131,35 @@ export default function Card({ loja }: { loja: LojaProps }) {
           Leitura mês anterior
         </Text>
         <Text style={[styles.cardSpan, { color: color.gray900 }]}>
-          {loja?.medidores[0]?.ultima_leitura}
+          {formatarLeitura(
+            Number(loja?.medidores[0]?.leituras[0]?.leitura_anterior),
+            loja?.medidores[0]?.dig
+          ) ||
+            formatarLeitura(
+              Number(loja?.medidores[0]?.ultima_leitura),
+              loja?.medidores[0]?.dig
+            )}
+        </Text>
+      </View>
+      <View style={styles.cardHeader}>
+        <Text style={[styles.cardSpan, { color: color.gray900 }]}>
+          Leitura atual
+        </Text>
+        <Text style={[styles.cardSpan, { color: color.gray900 }]}>
+          {formatarLeitura(
+            Number(loja?.medidores[0]?.leituras[0]?.leitura_atual),
+            loja?.medidores[0]?.dig
+          ) || "0"}
+        </Text>
+      </View>
+      <View style={styles.cardHeader}>
+        <Text style={[styles.cardSpan, { color: color.gray900 }]}>Consumo</Text>
+        <Text style={[styles.cardSpan, { color: color.gray900 }]}>
+          {formatarLeitura(
+            Number(loja?.medidores[0]?.leituras[0]?.consumo_mensal),
+            loja?.medidores[0]?.dig
+          ) || "0"}{" "}
+          {loja?.medidores[0]?.tipo_medicao === "Energia" ? "kWh" : "m3"}
         </Text>
       </View>
 
@@ -125,10 +168,9 @@ export default function Card({ loja }: { loja: LojaProps }) {
           style={[
             styles.btnCardDefault,
             {
-              backgroundColor:
-                isVerificad || shouldDisable || isVerificadMonth
-                  ? color.roxoPlaceholder
-                  : color.roxo,
+              backgroundColor: isVerificadMonth
+                ? color.roxo
+                : color.roxoPlaceholder,
             },
           ]}
           onPress={() => {

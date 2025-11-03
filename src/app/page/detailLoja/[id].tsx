@@ -5,6 +5,7 @@ import { ConfirmationModal } from "@/src/_components/ConfirmationModal";
 import { ImageZoomModal } from "@/src/_components/ImagemZoomModal";
 import { SideBar } from "@/src/_components/sideBar";
 import { Title } from "@/src/_components/title";
+import { formatarLeitura } from "@/src/action/FormataLeitura";
 import { useAppContext } from "@/src/context/useAppContext";
 import { useImagePickerValidation } from "@/src/hook/useImagePickerValidation";
 import { useLeituraForm } from "@/src/hook/useLeituraForm";
@@ -117,7 +118,7 @@ export default function DetailLoja() {
           {!lojaData ? (
             <View style={styles.loadingContainer}>
               <ActivityIndicator size={"large"} color={color.roxo} />
-              <Text style={{ fontSize: 16, fontWeight: "600" }}>
+              <Text style={{ fontSize: 16, fontWeight: "normal" }}>
                 Carregando dados da loja...
               </Text>
             </View>
@@ -148,7 +149,7 @@ export default function DetailLoja() {
               />
               <InfoItem
                 label="Leitura anterior"
-                value={String(leituraAnterior)}
+                value={formatarLeitura(leituraAnterior, lojaData.medidor.dig)}
               />
 
               <Text style={[styles.label, { color: color.gray900 }]}>
@@ -170,7 +171,15 @@ export default function DetailLoja() {
                 editable={isHave}
               />
 
-              <InfoItem label="Consumo" value={String(consumoCalculado)} />
+              <InfoItem
+                label="Consumo"
+                value={
+                  formatarLeitura(
+                    Number(lojaData?.medidor?.leituras[0]?.consumo_mensal),
+                    lojaData.medidor.dig
+                  ) || "0"
+                }
+              />
 
               <Text style={[styles.label, { color: color.gray900 }]}>
                 Foto do Medidor *
